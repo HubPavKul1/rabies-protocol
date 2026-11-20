@@ -1,15 +1,14 @@
 @echo off
 chcp 65001 >nul
 echo ===================================================
-echo   ⚙️  Быстрая сборка и запуск RabiesProtocol
+echo   ⚙️  Сборка и запуск RabiesProtocol (с DevTools)
 echo ===================================================
 echo.
 
-:: Очистка предыдущей сборки (опционально, для чистоты)
 if exist build\bin\RabiesProtocol.exe del build\bin\RabiesProtocol.exe
 
-echo [1/2] Сборка приложения (займет ~10-15 секунд)...
-wails build
+echo [1/2] Сборка приложения с включенной панелью разработчика...
+wails build -devtools
 
 if %errorlevel% neq 0 (
     echo.
@@ -21,8 +20,7 @@ if %errorlevel% neq 0 (
 echo.
 echo [2/2] ✅ Сборка успешна! Запуск приложения...
 echo.
+echo 💡 Подсказка: Нажмите F12 внутри окна приложения, чтобы открыть консоль.
+echo.
 
-:: Запуск собранного exe-файла
 start "" "build\bin\RabiesProtocol.exe"
-
-echo Приложение запущено. Это окно можно закрыть.
