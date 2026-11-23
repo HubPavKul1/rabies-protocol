@@ -1,0 +1,1017 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RabiesProtocol</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background: #f0f2f5;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      .app-container {
+        max-width: 1000px;
+        margin: 20px auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .nav {
+        display: flex;
+        background: #2c5282;
+        color: white;
+      }
+      .nav button {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 15px 25px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: 0.2s;
+      }
+      .nav button:hover,
+      .nav button.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+      }
+      .content {
+        padding: 30px;
+      }
+      .hidden {
+        display: none !important;
+      }
+      h2 {
+        color: #2c5282;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 10px;
+        margin-top: 0;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+      .form-full {
+        grid-column: 1 / -1;
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #4a5568;
+        margin-bottom: 5px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cbd5e0;
+        border-radius: 6px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #4299e1;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: 0.2s;
+      }
+      .btn-primary {
+        background: #2c5282;
+        color: white;
+      }
+      .btn-primary:hover {
+        background: #2a4365;
+      }
+      .btn-danger {
+        background: #c53030;
+        color: white;
+      }
+      .btn-danger:hover {
+        background: #9b2c2c;
+      }
+      .btn-secondary {
+        background: #718096;
+        color: white;
+      }
+      .btn-sm {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+      .red-flag-box {
+        background: #fff5f5;
+        border: 1px solid #fc8181;
+        color: #c53030;
+        padding: 15px;
+        border-radius: 6px;
+        margin: 15px 0;
+        font-weight: 600;
+      }
+      .green-flag-box {
+        background: #f0fff4;
+        border: 1px solid #9ae6b4;
+        color: #2f855a;
+        padding: 15px;
+        border-radius: 6px;
+        margin: 15px 0;
+        font-weight: 600;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 14px;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      th {
+        background: #f7fafc;
+        font-weight: 600;
+        color: #4a5568;
+      }
+
+      /* ПЕЧАТНЫЕ ФОРМЫ */
+      .print-area {
+        display: none;
+      }
+      @media print {
+        body {
+          background: white;
+        }
+        .app-container {
+          box-shadow: none;
+          margin: 0;
+          max-width: 100%;
+        }
+        .nav,
+        .no-print {
+          display: none !important;
+        }
+        .print-area {
+          display: block !important;
+          padding: 10px;
+        }
+        .content {
+          padding: 0;
+        }
+
+        /* Стили для Ф-20 */
+        .f20-header {
+          display: flex;
+          justify-content: space-between;
+          font-size: 10pt;
+          margin-bottom: 10px;
+          border: 1px solid #000;
+          padding: 5px;
+        }
+        .f20-title {
+          text-align: center;
+          font-weight: bold;
+          font-size: 11pt;
+          margin: 10px 0;
+          text-transform: uppercase;
+        }
+        .f20-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 10pt;
+        }
+        .f20-table td,
+        .f20-table th {
+          border: 1px solid #000;
+          padding: 4px 8px;
+          vertical-align: top;
+        }
+        .f20-label {
+          font-weight: bold;
+          background: #f9f9f9;
+          width: 35%;
+        }
+        .f20-signatures {
+          margin-top: 30px;
+          font-size: 10pt;
+        }
+        .f20-disclaimer {
+          font-size: 7pt;
+          color: #333;
+          margin-top: 20px;
+          line-height: 1.2;
+          text-align: justify;
+        }
+
+        /* Стили для Отказа */
+        .refusal-doc {
+          font-family: "Times New Roman", serif;
+          font-size: 12pt;
+          line-height: 1.5;
+          padding: 20px;
+        }
+        .refusal-header {
+          text-align: right;
+          margin-bottom: 30px;
+          font-size: 11pt;
+        }
+        .refusal-header-clinic {
+          text-align: center;
+          font-weight: bold;
+          font-size: 14pt;
+          margin-bottom: 10px;
+          text-transform: uppercase;
+        }
+        .refusal-title {
+          text-align: center;
+          font-weight: bold;
+          font-size: 14pt;
+          margin: 20px 0;
+        }
+        .refusal-section {
+          margin: 15px 0;
+          text-align: justify;
+        }
+        .refusal-signatures {
+          margin-top: 50px;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="nav no-print">
+        <button class="active" onclick="showTab('new-doc')">
+          📝 Новый документ
+        </button>
+        <button onclick="showTab('directories')">📚 Справочники</button>
+        <button onclick="showTab('settings')">⚙️ Настройки</button>
+      </div>
+
+      <div class="content no-print">
+        <!-- Вкладка: Новый документ -->
+        <div id="tab-new-doc">
+          <h2>Эпидемиологический опрос и формирование документа</h2>
+          <form id="doc-form" onsubmit="submitDoc(event)">
+            <div class="form-grid">
+              <div>
+                <label>Ветеринарный врач *</label>
+                <select id="d-vet" required></select>
+              </div>
+              <div>
+                <label>Владелец животного *</label>
+                <select id="d-owner" required></select>
+              </div>
+              <div class="form-full">
+                <label>Животное *</label>
+                <select id="d-animal" required></select>
+              </div>
+            </div>
+
+            <div class="red-flag-box">
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-wild" style="width: auto" />
+                Были контакты с дикими или безнадзорными животными?
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-bite" style="width: auto" />
+                Кусало ли животное людей за последние 60 дней?
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-saliva" style="width: auto" />
+                Было ли ослюнение людей (попадание слюны на ранки/слизистые)?
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-signs" style="width: auto" />
+                Наблюдались ли: агрессия, слюнотечение, паралич челюсти,
+                водобоязнь?
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-corpse" style="width: auto" />
+                Есть ли на трупе следы укусов или ослюнения?
+              </label>
+            </div>
+
+            <!-- Блок для ОТПРАВКИ (Ф-20) -->
+            <div id="block-send" class="hidden">
+              <div
+                class="red-flag-box"
+                style="
+                  background: #fff5f5;
+                  border-color: #c53030;
+                  color: #c53030;
+                "
+              >
+                ⚠️ ОБНАРУЖЕНЫ ОСНОВАНИЯ: Требуется оформление сопроводительной
+                заявки Ф-20 и направление материала в лабораторию.
+              </div>
+              <div class="form-grid">
+                <div class="form-full">
+                  <label>Направляется для исключения (заболевания)</label>
+                  <input type="text" id="d-disease" value="Бешенство" />
+                </div>
+                <div class="form-full">
+                  <label
+                    >Патологический материал (наименование, количество)</label
+                  >
+                  <textarea
+                    id="d-material"
+                    placeholder="Например: Голова кошки целиком, 1 шт."
+                  ></textarea>
+                </div>
+                <div>
+                  <label>Дата заболевания</label
+                  ><input type="date" id="d-illness-date" />
+                </div>
+                <div>
+                  <label>Дата падежа / эвтаназии</label
+                  ><input type="date" id="d-death-date" />
+                </div>
+                <div class="form-full">
+                  <label>Клиническая картина</label
+                  ><textarea id="d-clinical"></textarea>
+                </div>
+                <div class="form-full">
+                  <label>Данные патологоанатомического вскрытия</label
+                  ><textarea id="d-patho"></textarea>
+                </div>
+                <div>
+                  <label>Место отбора материала</label
+                  ><input type="text" id="d-sample-place" />
+                </div>
+                <div>
+                  <label>Дата и время отбора</label
+                  ><input type="datetime-local" id="d-sample-time" />
+                </div>
+                <div>
+                  <label>№ акта отбора</label
+                  ><input type="text" id="d-act-no" />
+                </div>
+                <div>
+                  <label>Вид упаковки</label
+                  ><input
+                    type="text"
+                    id="d-pack-type"
+                    placeholder="Герметичный контейнер со льдом"
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-danger"
+                style="width: 100%; margin-top: 20px"
+              >
+                📄 Сформировать заявку Ф-20
+              </button>
+            </div>
+
+            <!-- Блок для ОТКАЗА -->
+            <div id="block-refuse" class="hidden">
+              <div class="green-flag-box">
+                ✅ ОСНОВАНИЯ ОТСУТСТВУЮТ: Оформляется обоснованный отказ в
+                направлении трупа на исследование.
+              </div>
+              <div class="form-grid">
+                <div class="form-full">
+                  <label
+                    >Известный диагноз / обстоятельства падежа (для обоснования
+                    отказа) *</label
+                  >
+                  <textarea
+                    id="d-refuse-reason"
+                    required
+                    placeholder="Например: Хроническая болезнь почек (ХБП), панлейкопения. Лечение проводилось в сторонней клинике. Контактов с другими животными не было."
+                  ></textarea>
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="width: 100%; margin-top: 20px"
+              >
+                📄 Сформировать обоснованный отказ
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Вкладка: Справочники -->
+        <div id="tab-directories" class="hidden">
+          <h2>Справочники</h2>
+          <div style="margin-bottom: 15px">
+            <button class="btn btn-sm btn-secondary" onclick="showDir('vets')">
+              Ветеринарные врачи
+            </button>
+            <button
+              class="btn btn-sm btn-secondary"
+              onclick="showDir('owners')"
+            >
+              Владельцы
+            </button>
+            <button
+              class="btn btn-sm btn-secondary"
+              onclick="showDir('animals')"
+            >
+              Животные
+            </button>
+          </div>
+
+          <div id="dir-vets">
+            <h3>Ветеринарные врачи</h3>
+            <div class="form-grid">
+              <input
+                type="text"
+                id="new-vet-name"
+                placeholder="ФИО полностью"
+              />
+              <input
+                type="text"
+                id="new-vet-pos"
+                placeholder="Должность (напр. Ветеринарный врач)"
+              />
+              <button class="btn btn-primary" onclick="addVet()">
+                Добавить
+              </button>
+            </div>
+            <table id="table-vets">
+              <thead>
+                <tr>
+                  <th>ФИО</th>
+                  <th>Должность</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div id="dir-owners" class="hidden">
+            <h3>Владельцы</h3>
+            <div class="form-grid">
+              <input
+                type="text"
+                id="new-owner-name"
+                placeholder="ФИО или Организация"
+              />
+              <input
+                type="text"
+                id="new-owner-doc"
+                placeholder="Документ (паспорт)"
+              />
+              <input
+                type="text"
+                id="new-owner-addr"
+                placeholder="Адрес"
+                class="form-full"
+              />
+              <input type="text" id="new-owner-phone" placeholder="Телефон" />
+              <button class="btn btn-primary" onclick="addOwner()">
+                Добавить
+              </button>
+            </div>
+            <table id="table-owners">
+              <thead>
+                <tr>
+                  <th>ФИО/Орг</th>
+                  <th>Документ</th>
+                  <th>Адрес</th>
+                  <th>Телефон</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div id="dir-animals" class="hidden">
+            <h3>Животные</h3>
+            <div class="form-grid">
+              <select id="new-animal-owner"></select>
+              <input
+                type="text"
+                id="new-animal-species"
+                placeholder="Вид (Кошка)"
+              />
+              <input
+                type="text"
+                id="new-animal-nick"
+                placeholder="Кличка / Инв. номер"
+              />
+              <input type="text" id="new-animal-age" placeholder="Возраст" />
+              <select id="new-animal-sex">
+                <option value="м">М</option>
+                <option value="ж">Ж</option>
+                <option value="неизв.">Неизв.</option>
+              </select>
+              <button class="btn btn-primary" onclick="addAnimal()">
+                Добавить
+              </button>
+            </div>
+            <table id="table-animals">
+              <thead>
+                <tr>
+                  <th>Владелец</th>
+                  <th>Вид</th>
+                  <th>Кличка/Инв.№</th>
+                  <th>Возраст/Пол</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-settings" class="hidden">
+          <h2>Настройки организации и лаборатории</h2>
+          <h3 style="color: #2c5282; margin-top: 20px">
+            Данные вашей СББЖ (Ветклиники)
+          </h3>
+          <div class="form-grid">
+            <div class="form-full">
+              <label>Полное наименование СББЖ *</label>
+              <input
+                type="text"
+                id="cfg-clinic-name"
+                placeholder="ГБУ ИО «Ивановская областная СББЖ»"
+              />
+            </div>
+          </div>
+
+          <h3
+            style="
+              color: #2c5282;
+              margin-top: 30px;
+              border-top: 1px solid #e2e8f0;
+              padding-top: 20px;
+            "
+          >
+            Данные принимающей лаборатории
+          </h3>
+          <div class="form-grid">
+            <div class="form-full">
+              <label>Наименование лаборатории</label
+              ><input type="text" id="cfg-lab-name" />
+            </div>
+            <div class="form-full">
+              <label>Адрес лаборатории</label
+              ><input type="text" id="cfg-lab-address" />
+            </div>
+            <div>
+              <label>Телефон/Факс</label
+              ><input type="text" id="cfg-lab-phone" />
+            </div>
+            <div>
+              <label>E-mail</label><input type="text" id="cfg-lab-email" />
+            </div>
+          </div>
+          <button
+            class="btn btn-primary"
+            onclick="saveSettings()"
+            style="margin-top: 20px"
+          >
+            Сохранить настройки
+          </button>
+        </div>
+      </div>
+
+      <!-- Область печати -->
+      <div id="print-view" class="print-area">
+        <div class="no-print" style="margin-bottom: 20px; text-align: center">
+          <button class="btn btn-secondary" onclick="closePrint()">
+            ← Вернуться
+          </button>
+          <button
+            class="btn btn-primary"
+            onclick="window.print()"
+            style="margin-left: 15px"
+          >
+            🖨️ Печать / Сохранить в PDF
+          </button>
+        </div>
+        <div id="print-document"></div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        await loadSettings();
+        await loadVets();
+        await loadOwners();
+        await loadAnimals();
+        setupFlagListeners();
+        showTab("new-doc");
+      });
+
+      function showTab(tabId) {
+        document
+          .querySelectorAll(".content > div")
+          .forEach((d) => d.classList.add("hidden"));
+        document.getElementById("tab-" + tabId).classList.remove("hidden");
+        document
+          .querySelectorAll(".nav button")
+          .forEach((b) => b.classList.remove("active"));
+        event?.target?.classList.add("active");
+      }
+
+      function showDir(dir) {
+        ["vets", "owners", "animals"].forEach((d) =>
+          document.getElementById("dir-" + d).classList.add("hidden"),
+        );
+        document.getElementById("dir-" + dir).classList.remove("hidden");
+      }
+
+      function setupFlagListeners() {
+        const flags = [
+          "flag-wild",
+          "flag-bite",
+          "flag-saliva",
+          "flag-signs",
+          "flag-corpse",
+        ];
+        flags.forEach((id) => {
+          document
+            .getElementById(id)
+            .addEventListener("change", updateFormView);
+        });
+        updateFormView();
+      }
+
+      function updateFormView() {
+        const hasFlags =
+          document.getElementById("flag-wild").checked ||
+          document.getElementById("flag-bite").checked ||
+          document.getElementById("flag-saliva").checked ||
+          document.getElementById("flag-signs").checked ||
+          document.getElementById("flag-corpse").checked;
+
+        if (hasFlags) {
+          document.getElementById("block-send").classList.remove("hidden");
+          document.getElementById("block-refuse").classList.add("hidden");
+        } else {
+          document.getElementById("block-send").classList.add("hidden");
+          document.getElementById("block-refuse").classList.remove("hidden");
+        }
+      }
+
+      async function api(url, method = "GET", data = null) {
+        const opts = {
+          method,
+          headers: { "Content-Type": "application/json" },
+        };
+        if (data) opts.body = JSON.stringify(data);
+        const res = await fetch(url, opts);
+        return method === "GET" ? await res.json() : res;
+      }
+
+      async function loadSettings() {
+        const cfg = await api("/api/config");
+        document.getElementById("cfg-clinic-name").value =
+          cfg.clinic_name || "";
+        document.getElementById("cfg-lab-name").value = cfg.lab_name || "";
+        document.getElementById("cfg-lab-address").value =
+          cfg.lab_address || "";
+        document.getElementById("cfg-lab-phone").value = cfg.lab_phone || "";
+        document.getElementById("cfg-lab-email").value = cfg.lab_email || "";
+      }
+
+      async function saveSettings() {
+        await api("/api/config", "POST", {
+          clinic_name: document.getElementById("cfg-clinic-name").value,
+          lab_name: document.getElementById("cfg-lab-name").value,
+          lab_address: document.getElementById("cfg-lab-address").value,
+          lab_phone: document.getElementById("cfg-lab-phone").value,
+          lab_email: document.getElementById("cfg-lab-email").value,
+        });
+        alert("Настройки успешно сохранены!");
+      }
+
+      async function loadVets() {
+        const vets = await api("/api/vets");
+        const select = document.getElementById("d-vet");
+        select.innerHTML = '<option value="">Выберите...</option>';
+        const tbody = document.querySelector("#table-vets tbody");
+        tbody.innerHTML = "";
+        vets.forEach((v) => {
+          select.innerHTML += `<option value="${v.id}">${v.full_name} (${v.position})</option>`;
+          tbody.innerHTML += `<tr><td>${v.full_name}</td><td>${v.position}</td><td><button class="btn btn-sm btn-secondary" onclick="editVet('${v.id}', '${v.full_name}', '${v.position}')">Изменить</button></td></tr>`;
+        });
+      }
+      async function addVet() {
+        await api("/api/vets", "POST", {
+          full_name: document.getElementById("new-vet-name").value,
+          position: document.getElementById("new-vet-pos").value,
+        });
+        document.getElementById("new-vet-name").value = "";
+        document.getElementById("new-vet-pos").value = "";
+        loadVets();
+      }
+      async function editVet(id, name, pos) {
+        const newName = prompt("ФИО:", name);
+        const newPos = prompt("Должность:", pos);
+        if (newName && newPos) {
+          await api("/api/vets", "PUT", {
+            id,
+            full_name: newName,
+            position: newPos,
+          });
+          loadVets();
+        }
+      }
+
+      async function loadOwners() {
+        const owners = await api("/api/owners");
+        const select = document.getElementById("d-owner");
+        const animalOwnerSelect = document.getElementById("new-animal-owner");
+        select.innerHTML = '<option value="">Выберите...</option>';
+        animalOwnerSelect.innerHTML = "";
+        const tbody = document.querySelector("#table-owners tbody");
+        tbody.innerHTML = "";
+        owners.forEach((o) => {
+          select.innerHTML += `<option value="${o.id}">${o.full_name}</option>`;
+          animalOwnerSelect.innerHTML += `<option value="${o.id}">${o.full_name}</option>`;
+          tbody.innerHTML += `<tr><td>${o.full_name}</td><td>${o.doc_info}</td><td>${o.address}</td><td>${o.phone}</td><td><button class="btn btn-sm btn-secondary" onclick="editOwner('${o.id}')">Изменить</button></td></tr>`;
+        });
+      }
+      async function addOwner() {
+        await api("/api/owners", "POST", {
+          full_name: document.getElementById("new-owner-name").value,
+          doc_info: document.getElementById("new-owner-doc").value,
+          address: document.getElementById("new-owner-addr").value,
+          phone: document.getElementById("new-owner-phone").value,
+        });
+        [
+          "new-owner-name",
+          "new-owner-doc",
+          "new-owner-addr",
+          "new-owner-phone",
+        ].forEach((id) => (document.getElementById(id).value = ""));
+        loadOwners();
+      }
+      async function editOwner(id) {
+        const owner = (await api("/api/owners")).find((o) => o.id === id);
+        const name = prompt("ФИО:", owner.full_name);
+        if (name) {
+          await api("/api/owners", "PUT", { ...owner, full_name: name });
+          loadOwners();
+        }
+      }
+
+      async function loadAnimals() {
+        const animals = await api("/api/animals");
+        const select = document.getElementById("d-animal");
+        select.innerHTML = '<option value="">Выберите...</option>';
+        const tbody = document.querySelector("#table-animals tbody");
+        tbody.innerHTML = "";
+        animals.forEach((a) => {
+          select.innerHTML += `<option value="${a.id}">${a.species} "${a.nickname || a.inventory_no}" (${a.owner_name})</option>`;
+          tbody.innerHTML += `<tr><td>${a.owner_name}</td><td>${a.species}</td><td>${a.nickname || a.inventory_no}</td><td>${a.age}, ${a.sex}</td><td><button class="btn btn-sm btn-secondary" onclick="editAnimal('${a.id}')">Изменить</button></td></tr>`;
+        });
+      }
+      async function addAnimal() {
+        await api("/api/animals", "POST", {
+          owner_id: document.getElementById("new-animal-owner").value,
+          species: document.getElementById("new-animal-species").value,
+          nickname: document.getElementById("new-animal-nick").value,
+          age: document.getElementById("new-animal-age").value,
+          sex: document.getElementById("new-animal-sex").value,
+          inventory_no: "",
+        });
+        ["new-animal-species", "new-animal-nick", "new-animal-age"].forEach(
+          (id) => (document.getElementById(id).value = ""),
+        );
+        loadAnimals();
+      }
+      async function editAnimal(id) {
+        const animal = (await api("/api/animals")).find((a) => a.id === id);
+        const nick = prompt(
+          "Кличка/Инв.№:",
+          animal.nickname || animal.inventory_no,
+        );
+        if (nick) {
+          await api("/api/animals", "PUT", { ...animal, nickname: nick });
+          loadAnimals();
+        }
+      }
+
+      async function submitDoc(e) {
+        e.preventDefault();
+        const hasFlags =
+          document.getElementById("flag-wild").checked ||
+          document.getElementById("flag-bite").checked ||
+          document.getElementById("flag-saliva").checked ||
+          document.getElementById("flag-signs").checked ||
+          document.getElementById("flag-corpse").checked;
+
+        const payload = {
+          vet_id: document.getElementById("d-vet").value,
+          owner_id: document.getElementById("d-owner").value,
+          animal_id: document.getElementById("d-animal").value,
+          decision_type: hasFlags ? "send" : "refuse",
+          decision_reason: hasFlags
+            ? "Наличие оснований для подозрения на бешенство (п. 10 Правил)"
+            : document.getElementById("d-refuse-reason").value,
+          disease_to_exclude: document.getElementById("d-disease").value,
+          material_desc: document.getElementById("d-material").value,
+          illness_date: document.getElementById("d-illness-date").value,
+          death_date: document.getElementById("d-death-date").value,
+          clinical_picture: document.getElementById("d-clinical").value,
+          patho_data: document.getElementById("d-patho").value,
+          sampling_place: document.getElementById("d-sample-place").value,
+          sampling_datetime: document.getElementById("d-sample-time").value,
+          act_no: document.getElementById("d-act-no").value,
+          send_date: new Date().toISOString().split("T")[0],
+          packaging_type: document.getElementById("d-pack-type").value,
+        };
+
+        const res = await api("/api/protocols", "POST", payload);
+        const data = await res.json();
+        showPrintView(data.id);
+      }
+
+      async function showPrintView(id) {
+        document
+          .querySelectorAll(".content > div")
+          .forEach((d) => d.classList.add("hidden"));
+        document.querySelector(".nav").classList.add("hidden");
+        document.getElementById("print-view").classList.remove("hidden");
+
+        const data = await api("/api/protocol/" + id);
+        const container = document.getElementById("print-document");
+
+        if (data.decision_type === "refuse") {
+          // ШАБЛОН ОТКАЗА (СББЖ в шапке)
+          container.innerHTML = `
+                <div class="refusal-doc">
+                    <div class="refusal-header-clinic">${data.clinic_name}</div>
+                    <div class="refusal-header">
+                        Исх. № ______ от «___» ________ 20__ г.<br><br>
+                        В ${data.lab_name}<br>
+                        ${data.lab_address}
+                    </div>
+                    <div class="refusal-title">ОБОСНОВАННЫЙ ОТКАЗ<br>в направлении патологического материала на исследование<br>на бешенство</div>
+                    
+                    <div class="refusal-section">
+                        Касательно трупа животного: <b>${data.species}</b> (возраст: ${data.age}, пол: ${data.sex}), кличка/инв.№: ${data.nickname || data.inv_no}.<br>
+                        Владелец: <b>${data.owner_name}</b> (${data.owner_doc}, ${data.owner_addr}, тел: ${data.owner_phone}).<br>
+                        Осмотр провел: <b>${data.vet_name}</b>, ${data.vet_pos}.
+                    </div>
+
+                    <div class="refusal-section">
+                        <b>1. Фактические обстоятельства:</b><br>
+                        ${data.decision_reason}
+                    </div>
+
+                    <div class="refusal-section">
+                        <b>2. Правовое обоснование:</b><br>
+                        В соответствии с п. 10 «Ветеринарных правил осуществления профилактических, диагностических, ограничительных и иных мероприятий, установления и отмены карантина и иных ограничений, направленных на предотвращение распространения и ликвидацию очагов бешенства» (утв. приказом Минсельхоза России от 25.11.2020 № 705), основаниями для подозрения на бешенство являются наличие клинических признаков, контакт с больными животными или обнаружение трупа со следами укусов/ослюнения. 
+                        В данном случае указанные основания <b>отсутствуют</b>.
+                    </div>
+
+                    <div class="refusal-section">
+                        <b>3. Разъяснения владельцу:</b>
+                        <ul>
+                            <li>Труп животного подлежит утилизации в порядке, установленном Ветеринарными правилами сбора, хранения, перемещения, утилизации и уничтожения биологических отходов.</li>
+                            <li>При наличии факта укуса или ослюнения животным, владельцу настоятельно рекомендовано немедленно обратиться в медицинскую организацию (травмпункт) для решения вопроса о проведении курса антирабической вакцинации.</li>
+                        </ul>
+                    </div>
+
+                    <div class="refusal-signatures">
+                        <div>Ветеринарный врач:<br><br>___________ / ${data.vet_name} /</div>
+                        <div>С документом ознакомлен(а):<br><br>___________ / ${data.owner_name} /<br>«___» ________ 20__ г.</div>
+                    </div>
+                </div>
+            `;
+        } else {
+          // ШАБЛОН Ф-20 (СББЖ как Заказчик/Отправитель)
+          container.innerHTML = `
+                <div class="f20-header">
+                    <div>
+                        <b>Заказчик (Отправитель):</b><br>
+                        ${data.clinic_name}<br>
+                        Ветеринарный врач: ${data.vet_name}, ${data.vet_pos}<br>
+                        Владелец животного: ${data.owner_name}<br>
+                        ${data.owner_doc}<br>
+                        ${data.owner_addr}<br>
+                        Тел: ${data.owner_phone}
+                    </div>
+                    <div style="text-align: right;">
+                        ${data.lab_name}<br>
+                        ${data.lab_address}<br>
+                        ${data.lab_phone}<br>
+                        ${data.lab_email}
+                    </div>
+                </div>
+                
+                <div class="f20-title">СОПРОВОДИТЕЛЬНЫЙ ДОКУМЕНТ-ЗАЯВКА<br>К ПАТОЛОГИЧЕСКОМУ (БИОЛОГИЧЕСКОМУ) МАТЕРИАЛУ (Ф-20)</div>
+                
+                <table class="f20-table">
+                    <tr><td class="f20-label">Регистрационный номер заявки</td><td></td><td class="f20-label">Шифр образца</td><td></td><td class="f20-label">Дата поступления</td><td></td><td class="f20-label">Время поступления</td><td></td></tr>
+                    <tr><td class="f20-label">Направляется для исключения</td><td colspan="7">${data.disease}</td></tr>
+                    <tr><td class="f20-label">Патологический (биологический) материал</td><td colspan="7">${data.material}</td></tr>
+                    <tr><td class="f20-label">От (вид, возраст, пол)</td><td colspan="7">${data.species}, ${data.age}, ${data.sex}. Кличка/Инв.№: ${data.nickname || data.inv_no}</td></tr>
+                    <tr><td class="f20-label">Принадлежащего</td><td colspan="7">${data.owner_name}, ${data.owner_addr}</td></tr>
+                    <tr><td class="f20-label">Дата заболевания / падежа</td><td colspan="7">Заболел: ${data.illness_date || "не указана"} | Пал: ${data.death_date || "не указан"}</td></tr>
+                    <tr><td class="f20-label">Клиническая картина</td><td colspan="7">${data.clinical || "Не описана"}</td></tr>
+                    <tr><td class="f20-label">Патологоанатомические данные</td><td colspan="7">${data.patho || "Не проводилось"}</td></tr>
+                    <tr><td class="f20-label">Место, дата и время отбора</td><td colspan="7">${data.sample_place}, ${data.sample_time ? new Date(data.sample_time).toLocaleString("ru-RU") : "не указано"}</td></tr>
+                    <tr><td class="f20-label">№ акта / Вид упаковки</td><td colspan="7">Акт №: ${data.act_no || "б/н"} | Упаковка: ${data.pack_type || "не указана"}</td></tr>
+                </table>
+
+                <div class="f20-signatures">
+                    <div>
+                        Материал отобран, упакован и отправлен:<br><br>
+                        ____________________ / ${data.vet_name} /<br>
+                        <span style="font-size: 9pt;">(${data.vet_pos}, ${data.clinic_name})</span>
+                    </div>
+                    <div>
+                        Представитель заказчика (владелец):<br><br>
+                        ____________________ / ${data.owner_name} /<br>
+                        <span style="font-size: 9pt;">(подпись, дата)</span>
+                    </div>
+                </div>
+
+                <div class="f20-disclaimer">
+                    <b>Заказчик уведомлен и дает свое согласие на:</b> обработку персональных данных; сроки проведения испытаний; оплату всех расходов за проведение испытаний; невозврат и списание образцов после проведения испытаний без представителя заказчика.<br>
+                    Лаборатория не несет ответственность за стадию отбора и условия доставки образца(-ов), представленного(-ых) заказчиком для исследований. Лаборатория не дает оценку соответствия продукции, не выдает заключений о выданных результатах исследований. Информация, указанная в данной заявке, будет отражена в протоколе испытаний. За информацию, предоставленную заказчиком, лаборатория ответственности не несет.<br>
+                    В случае получения результата, не соответствующего требованиям НД, будет сформирован срочный отчет по форме 4-ВЕТ-Б, согласно ПРИКАЗУ МИНСЕЛЬХОЗА РФ от 21.02.2022 № 89.<br>
+                    В соответствии со статьей 4.1 Закона РФ «О Ветеринарии» от 14.05.1993 №4979-1 и Постановлением правительства РФ от 07.11.2016 №1140, испытательная лаборатория осуществляет работу с использованием компонента ФГИС «ВЕТИС». Сведения о выданных протоколах испытаний представляются в Федеральную службу по аккредитации (Приказ Минэкономразвития РФ от 24.10.2020 г. № 704).
+                </div>
+            `;
+        }
+      }
+
+      function closePrint() {
+        document.getElementById("print-view").classList.add("hidden");
+        document.querySelector(".nav").classList.remove("hidden");
+        showTab("new-doc");
+        document.getElementById("doc-form").reset();
+        updateFormView();
+      }
+    </script>
+  </body>
+</html>
