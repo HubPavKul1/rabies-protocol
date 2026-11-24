@@ -1,0 +1,25 @@
+{
+  "name": "rabies-protocol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HubPavKul1/rabies-protocol.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/HubPavKul1/rabies-protocol/issues"
+  },
+  "homepage": "https://github.com/HubPavKul1/rabies-protocol#readme",
+  "dependencies": {
+    "docxtemplater": "^3.71.1",
+    "pizzip": "^3.3.0"
+  }
+}

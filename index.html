@@ -52,9 +52,18 @@
         padding-bottom: 10px;
         margin-top: 0;
       }
+      h3 {
+        color: #2c5282;
+      }
       .form-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+      .form-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
         gap: 15px;
         margin-bottom: 15px;
       }
@@ -112,6 +121,13 @@
       .btn-danger:hover {
         background: #9b2c2c;
       }
+      .btn-success {
+        background: #38a169;
+        color: white;
+      }
+      .btn-success:hover {
+        background: #2f855a;
+      }
       .btn-secondary {
         background: #718096;
         color: white;
@@ -138,7 +154,11 @@
         margin: 15px 0;
         font-weight: 600;
       }
-
+      .section-divider {
+        border-top: 2px dashed #cbd5e0;
+        margin: 25px 0;
+        padding-top: 20px;
+      }
       table {
         width: 100%;
         border-collapse: collapse;
@@ -162,6 +182,10 @@
         display: none;
       }
       @media print {
+        @page {
+          size: A4;
+          margin: 1.5cm;
+        }
         body {
           background: white;
         }
@@ -169,6 +193,7 @@
           box-shadow: none;
           margin: 0;
           max-width: 100%;
+          border-radius: 0;
         }
         .nav,
         .no-print {
@@ -176,20 +201,123 @@
         }
         .print-area {
           display: block !important;
-          padding: 10px;
+          padding: 0;
         }
         .content {
           padding: 0;
         }
+        .print-page {
+          page-break-after: always;
+        }
+        .print-page:last-child {
+          page-break-after: auto;
+        }
 
-        /* Стили для Ф-20 */
-        .f20-header {
+        /* ОТКАЗ */
+        .refusal-doc {
+          font-family: "Times New Roman", serif;
+          font-size: 12pt;
+          line-height: 1.5;
+          padding: 10px;
+        }
+        .refusal-header-clinic {
+          text-align: center;
+          font-weight: bold;
+          font-size: 14pt;
+          margin-bottom: 5px;
+          text-transform: uppercase;
+        }
+        .refusal-header-clinic-contacts {
+          text-align: center;
+          font-size: 10pt;
+          margin-bottom: 25px;
+        }
+        .refusal-title {
+          text-align: center;
+          font-weight: bold;
+          font-size: 14pt;
+          margin: 25px 0;
+        }
+        .refusal-section {
+          margin: 12px 0;
+          text-align: justify;
+        }
+        .refusal-signatures {
+          margin-top: 50px;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        /* ПРОТОКОЛ ОПРОСА */
+        .survey-doc {
+          font-family: "Times New Roman", serif;
+          font-size: 11pt;
+          line-height: 1.4;
+          padding: 10px;
+        }
+        .survey-header {
+          text-align: center;
+          font-weight: bold;
+          font-size: 13pt;
+          margin-bottom: 20px;
+          text-transform: uppercase;
+        }
+        .survey-meta {
+          font-size: 10pt;
+          margin-bottom: 15px;
+        }
+        .survey-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 10pt;
+          margin-top: 10px;
+        }
+        .survey-table td {
+          border: 1px solid #000;
+          padding: 6px 8px;
+          vertical-align: top;
+        }
+        .survey-label {
+          font-weight: bold;
+          background: #f5f5f5;
+          width: 45%;
+        }
+        .survey-signatures {
+          margin-top: 40px;
           display: flex;
           justify-content: space-between;
           font-size: 10pt;
+        }
+
+        /* Ф-20 */
+        .f20-page {
+          position: relative;
+          font-family: "Times New Roman", serif;
+          font-size: 10pt;
+        }
+        .goszadanie-stamp {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          border: 3px double #c53030;
+          color: #c53030;
+          padding: 6px 14px;
+          font-weight: bold;
+          font-size: 11pt;
+          transform: rotate(-8deg);
+          opacity: 0.85;
+          text-transform: uppercase;
+        }
+        .f20-header-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 9pt;
           margin-bottom: 10px;
+        }
+        .f20-header-table td {
           border: 1px solid #000;
-          padding: 5px;
+          padding: 4px 6px;
+          vertical-align: top;
         }
         .f20-title {
           text-align: center;
@@ -201,62 +329,60 @@
         .f20-table {
           width: 100%;
           border-collapse: collapse;
-          font-size: 10pt;
+          font-size: 9pt;
         }
-        .f20-table td,
-        .f20-table th {
+        .f20-table td {
           border: 1px solid #000;
-          padding: 4px 8px;
+          padding: 4px 6px;
           vertical-align: top;
         }
         .f20-label {
           font-weight: bold;
-          background: #f9f9f9;
-          width: 35%;
+          background: #fafafa;
+          width: 30%;
         }
         .f20-signatures {
-          margin-top: 30px;
-          font-size: 10pt;
+          margin-top: 15px;
+          font-size: 9pt;
+        }
+        .f20-options {
+          margin: 8px 0;
+          font-size: 9pt;
         }
         .f20-disclaimer {
-          font-size: 7pt;
+          font-size: 7.5pt;
           color: #333;
-          margin-top: 20px;
+          margin-top: 15px;
           line-height: 1.2;
           text-align: justify;
         }
-
-        /* Стили для Отказа */
-        .refusal-doc {
-          font-family: "Times New Roman", serif;
-          font-size: 12pt;
-          line-height: 1.5;
-          padding: 20px;
+        .f20-lab-mark {
+          border: 1px solid #000;
+          padding: 8px;
+          margin-top: 15px;
+          font-size: 9pt;
         }
-        .refusal-header {
-          text-align: right;
-          margin-bottom: 30px;
-          font-size: 11pt;
-        }
-        .refusal-header-clinic {
+        .f20-inventory-title {
           text-align: center;
           font-weight: bold;
-          font-size: 14pt;
-          margin-bottom: 10px;
+          font-size: 11pt;
+          margin: 20px 0 10px;
           text-transform: uppercase;
         }
-        .refusal-title {
+        .f20-inventory-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 9pt;
+        }
+        .f20-inventory-table td,
+        .f20-inventory-table th {
+          border: 1px solid #000;
+          padding: 5px;
           text-align: center;
-          font-weight: bold;
-          font-size: 14pt;
-          margin: 20px 0;
         }
-        .refusal-section {
-          margin: 15px 0;
-          text-align: justify;
-        }
-        .refusal-signatures {
-          margin-top: 50px;
+        .f20-footer {
+          margin-top: 20px;
+          font-size: 9pt;
           display: flex;
           justify-content: space-between;
         }
@@ -266,15 +392,14 @@
   <body>
     <div class="app-container">
       <div class="nav no-print">
-        <button class="active" onclick="showTab('new-doc')">
+        <button class="active" onclick="showTab('new-doc', event)">
           📝 Новый документ
         </button>
-        <button onclick="showTab('directories')">📚 Справочники</button>
-        <button onclick="showTab('settings')">⚙️ Настройки</button>
+        <button onclick="showTab('directories', event)">📚 Справочники</button>
+        <button onclick="showTab('settings', event)">⚙️ Настройки</button>
       </div>
 
       <div class="content no-print">
-        <!-- Вкладка: Новый документ -->
         <div id="tab-new-doc">
           <h2>Эпидемиологический опрос и формирование документа</h2>
           <form id="doc-form" onsubmit="submitDoc(event)">
@@ -294,6 +419,9 @@
             </div>
 
             <div class="red-flag-box">
+              <div style="margin-bottom: 10px; font-weight: bold">
+                Эпидемиологический анамнез (отметьте применимое):
+              </div>
               <label
                 style="
                   display: flex;
@@ -304,7 +432,7 @@
                 "
               >
                 <input type="checkbox" id="flag-wild" style="width: auto" />
-                Были контакты с дикими или безнадзорными животными?
+                Контакты с дикими или безнадзорными животными
               </label>
               <label
                 style="
@@ -316,7 +444,7 @@
                 "
               >
                 <input type="checkbox" id="flag-bite" style="width: auto" />
-                Кусало ли животное людей за последние 60 дней?
+                Факт укуса людей за последние 60 дней
               </label>
               <label
                 style="
@@ -328,7 +456,7 @@
                 "
               >
                 <input type="checkbox" id="flag-saliva" style="width: auto" />
-                Было ли ослюнение людей (попадание слюны на ранки/слизистые)?
+                Ослюнение людей (попадание слюны на ранки/слизистые)
               </label>
               <label
                 style="
@@ -340,8 +468,8 @@
                 "
               >
                 <input type="checkbox" id="flag-signs" style="width: auto" />
-                Наблюдались ли: агрессия, слюнотечение, паралич челюсти,
-                водобоязнь?
+                Клинические признаки: агрессия, слюнотечение, паралич челюсти,
+                водобоязнь
               </label>
               <label
                 style="
@@ -352,9 +480,42 @@
                 "
               >
                 <input type="checkbox" id="flag-corpse" style="width: auto" />
-                Есть ли на трупе следы укусов или ослюнения?
+                Следы укусов или ослюнения на трупе
               </label>
             </div>
+
+            <div class="section-divider"></div>
+            <h3>Детали опроса (для протокола)</h3>
+            <div class="form-grid">
+              <div class="form-full">
+                <label>Условия содержания животного</label>
+                <textarea
+                  id="s-housing"
+                  placeholder="Например: исключительно в квартире, без выгула, без контакта с другими животными"
+                ></textarea>
+              </div>
+              <div class="form-full">
+                <label
+                  >Подробности контактов / укусов / ослюнений (если были)</label
+                >
+                <textarea
+                  id="s-contacts"
+                  placeholder="Дата, обстоятельства, кто пострадал, характер повреждений"
+                ></textarea>
+              </div>
+              <div class="form-full">
+                <label
+                  >Подробности клинических признаков / следов на трупе (если
+                  были)</label
+                >
+                <textarea
+                  id="s-signs"
+                  placeholder="Когда появились, характер проявлений"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
 
             <!-- Блок для ОТПРАВКИ (Ф-20) -->
             <div id="block-send" class="hidden">
@@ -366,22 +527,27 @@
                   color: #c53030;
                 "
               >
-                ⚠️ ОБНАРУЖЕНЫ ОСНОВАНИЯ: Требуется оформление сопроводительной
-                заявки Ф-20 и направление материала в лабораторию.
+                ⚠️ ОБНАРУЖЕНЫ ОСНОВАНИЯ: будет оформлена заявка Ф-20 с описью
+                проб.
               </div>
+
+              <h3>Данные для заявки Ф-20</h3>
               <div class="form-grid">
                 <div class="form-full">
                   <label>Направляется для исключения (заболевания)</label>
                   <input type="text" id="d-disease" value="Бешенство" />
                 </div>
-                <div class="form-full">
-                  <label
-                    >Патологический материал (наименование, количество)</label
-                  >
-                  <textarea
-                    id="d-material"
-                    placeholder="Например: Голова кошки целиком, 1 шт."
-                  ></textarea>
+                <div>
+                  <label>Наименование патологического материала *</label>
+                  <input
+                    type="text"
+                    id="d-material-name"
+                    placeholder="Голова кошки целиком"
+                  />
+                </div>
+                <div>
+                  <label>Количество материала *</label>
+                  <input type="text" id="d-material-qty" placeholder="1 шт." />
                 </div>
                 <div>
                   <label>Дата заболевания</label
@@ -399,7 +565,15 @@
                   <label>Данные патологоанатомического вскрытия</label
                   ><textarea id="d-patho"></textarea>
                 </div>
-                <div>
+                <div class="form-full">
+                  <label>Предположительный диагноз</label
+                  ><input
+                    type="text"
+                    id="d-presumptive-diag"
+                    placeholder="Бешенство?"
+                  />
+                </div>
+                <div class="form-full">
                   <label>Место отбора материала</label
                   ><input type="text" id="d-sample-place" />
                 </div>
@@ -412,14 +586,85 @@
                   ><input type="text" id="d-act-no" />
                 </div>
                 <div>
+                  <label>Дата отправки материала</label
+                  ><input type="date" id="d-send-date" />
+                </div>
+                <div>
                   <label>Вид упаковки</label
                   ><input
                     type="text"
                     id="d-pack-type"
-                    placeholder="Герметичный контейнер со льдом"
+                    placeholder="Термос со льдом"
                   />
                 </div>
               </div>
+
+              <h3 style="margin-top: 20px">Параметры исследования</h3>
+              <div class="form-grid">
+                <div>
+                  <label>Испытания провести согласно:</label>
+                  <select id="d-acc-scope">
+                    <option value="Области аккредитации">
+                      Области аккредитации
+                    </option>
+                    <option value="Вне области аккредитации">
+                      Вне области аккредитации
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label>Право выбора метода исследования:</label>
+                  <select id="d-method-choice">
+                    <option value="Оставляю за лабораторией">
+                      Оставляю за лабораторией
+                    </option>
+                    <option value="Не оставляю за лабораторией">
+                      Не оставляю за лабораторией
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label>Сведения о неопределенности:</label>
+                  <select id="d-uncertainty">
+                    <option value="да">да</option>
+                    <option value="нет">нет</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Результат исследования:</label>
+                  <select id="d-result-delivery">
+                    <option value="выдать на руки">выдать на руки</option>
+                    <option value="отправить по электронной почте">
+                      отправить по электронной почте
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label>E-mail для отправки (если применимо)</label>
+                  <input type="text" id="d-result-email" />
+                </div>
+                <div>
+                  <label>Количество экземпляров результата</label>
+                  <input type="text" id="d-result-copies" value="1" />
+                </div>
+                <div>
+                  <label>Должность представителя заказчика</label>
+                  <input
+                    type="text"
+                    id="d-owner-rep-pos"
+                    placeholder="Владелец"
+                  />
+                </div>
+                <div>
+                  <label>Должность лица, сдавшего пробы</label>
+                  <input
+                    type="text"
+                    id="d-sample-receiver-pos"
+                    value="Ветеринарный врач"
+                  />
+                </div>
+              </div>
+
               <button
                 type="submit"
                 class="btn btn-danger"
@@ -432,19 +677,15 @@
             <!-- Блок для ОТКАЗА -->
             <div id="block-refuse" class="hidden">
               <div class="green-flag-box">
-                ✅ ОСНОВАНИЯ ОТСУТСТВУЮТ: Оформляется обоснованный отказ в
-                направлении трупа на исследование.
+                ✅ ОСНОВАНИЯ ОТСУТСТВУЮТ: будет оформлен обоснованный отказ для
+                владельца.
               </div>
               <div class="form-grid">
                 <div class="form-full">
-                  <label
-                    >Известный диагноз / обстоятельства падежа (для обоснования
-                    отказа) *</label
-                  >
+                  <label>Известный диагноз / обстоятельства падежа *</label>
                   <textarea
                     id="d-refuse-reason"
-                    required
-                    placeholder="Например: Хроническая болезнь почек (ХБП), панлейкопения. Лечение проводилось в сторонней клинике. Контактов с другими животными не было."
+                    placeholder="Например: Хроническая болезнь почек (ХБП), панлейкопения. Лечение в сторонней клинике."
                   ></textarea>
                 </div>
               </div>
@@ -459,7 +700,6 @@
           </form>
         </div>
 
-        <!-- Вкладка: Справочники -->
         <div id="tab-directories" class="hidden">
           <h2>Справочники</h2>
           <div style="margin-bottom: 15px">
@@ -479,7 +719,6 @@
               Животные
             </button>
           </div>
-
           <div id="dir-vets">
             <h3>Ветеринарные врачи</h3>
             <div class="form-grid">
@@ -488,11 +727,7 @@
                 id="new-vet-name"
                 placeholder="ФИО полностью"
               />
-              <input
-                type="text"
-                id="new-vet-pos"
-                placeholder="Должность (напр. Ветеринарный врач)"
-              />
+              <input type="text" id="new-vet-pos" placeholder="Должность" />
               <button class="btn btn-primary" onclick="addVet()">
                 Добавить
               </button>
@@ -508,7 +743,6 @@
               <tbody></tbody>
             </table>
           </div>
-
           <div id="dir-owners" class="hidden">
             <h3>Владельцы</h3>
             <div class="form-grid">
@@ -546,7 +780,6 @@
               <tbody></tbody>
             </table>
           </div>
-
           <div id="dir-animals" class="hidden">
             <h3>Животные</h3>
             <div class="form-grid">
@@ -588,23 +821,27 @@
 
         <div id="tab-settings" class="hidden">
           <h2>Настройки организации и лаборатории</h2>
-          <h3 style="color: #2c5282; margin-top: 20px">
-            Данные вашей СББЖ (Ветклиники)
-          </h3>
+          <h3 style="margin-top: 20px">Данные вашей СББЖ (Ветклиники)</h3>
           <div class="form-grid">
             <div class="form-full">
-              <label>Полное наименование СББЖ *</label>
-              <input
-                type="text"
-                id="cfg-clinic-name"
-                placeholder="ГБУ ИО «Ивановская областная СББЖ»"
-              />
+              <label>Полное наименование СББЖ *</label
+              ><input type="text" id="cfg-clinic-name" />
+            </div>
+            <div class="form-full">
+              <label>Юридический адрес СББЖ</label
+              ><input type="text" id="cfg-clinic-address" />
+            </div>
+            <div>
+              <label>Телефон СББЖ</label
+              ><input type="text" id="cfg-clinic-phone" />
+            </div>
+            <div>
+              <label>E-mail СББЖ</label
+              ><input type="text" id="cfg-clinic-email" />
             </div>
           </div>
-
           <h3
             style="
-              color: #2c5282;
               margin-top: 30px;
               border-top: 1px solid #e2e8f0;
               padding-top: 20px;
@@ -634,23 +871,39 @@
             onclick="saveSettings()"
             style="margin-top: 20px"
           >
-            Сохранить настройки
+            💾 Сохранить настройки
           </button>
         </div>
       </div>
 
       <!-- Область печати -->
       <div id="print-view" class="print-area">
-        <div class="no-print" style="margin-bottom: 20px; text-align: center">
+        <div
+          class="no-print"
+          style="
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 15px;
+            background: #f7fafc;
+          "
+        >
           <button class="btn btn-secondary" onclick="closePrint()">
             ← Вернуться
           </button>
           <button
-            class="btn btn-primary"
+            class="btn btn-success"
             onclick="window.print()"
             style="margin-left: 15px"
           >
             🖨️ Печать / Сохранить в PDF
+          </button>
+          <button
+            id="btn-download-word"
+            class="btn btn-primary"
+            onclick="downloadWord()"
+            style="margin-left: 15px; display: none"
+          >
+            📄 Скачать Word (Ф-20)
           </button>
         </div>
         <div id="print-document"></div>
@@ -658,16 +911,22 @@
     </div>
 
     <script>
+      let currentProtocolId = null;
       document.addEventListener("DOMContentLoaded", async () => {
-        await loadSettings();
-        await loadVets();
-        await loadOwners();
-        await loadAnimals();
-        setupFlagListeners();
-        showTab("new-doc");
+        try {
+          await loadSettings();
+          await loadVets();
+          await loadOwners();
+          await loadAnimals();
+          setupFlagListeners();
+          updateFormView();
+        } catch (e) {
+          console.error("Ошибка инициализации:", e);
+          alert("Ошибка при загрузке: " + e);
+        }
       });
 
-      function showTab(tabId) {
+      function showTab(tabId, evt) {
         document
           .querySelectorAll(".content > div")
           .forEach((d) => d.classList.add("hidden"));
@@ -675,47 +934,41 @@
         document
           .querySelectorAll(".nav button")
           .forEach((b) => b.classList.remove("active"));
-        event?.target?.classList.add("active");
+        if (evt && evt.target) evt.target.classList.add("active");
       }
-
       function showDir(dir) {
         ["vets", "owners", "animals"].forEach((d) =>
           document.getElementById("dir-" + d).classList.add("hidden"),
         );
         document.getElementById("dir-" + dir).classList.remove("hidden");
       }
-
       function setupFlagListeners() {
-        const flags = [
+        [
           "flag-wild",
           "flag-bite",
           "flag-saliva",
           "flag-signs",
           "flag-corpse",
-        ];
-        flags.forEach((id) => {
+        ].forEach((id) => {
           document
             .getElementById(id)
             .addEventListener("change", updateFormView);
         });
-        updateFormView();
       }
-
       function updateFormView() {
-        const hasFlags =
-          document.getElementById("flag-wild").checked ||
-          document.getElementById("flag-bite").checked ||
-          document.getElementById("flag-saliva").checked ||
-          document.getElementById("flag-signs").checked ||
-          document.getElementById("flag-corpse").checked;
-
-        if (hasFlags) {
-          document.getElementById("block-send").classList.remove("hidden");
-          document.getElementById("block-refuse").classList.add("hidden");
-        } else {
-          document.getElementById("block-send").classList.add("hidden");
-          document.getElementById("block-refuse").classList.remove("hidden");
-        }
+        const hasFlags = [
+          "flag-wild",
+          "flag-bite",
+          "flag-saliva",
+          "flag-signs",
+          "flag-corpse",
+        ].some((id) => document.getElementById(id).checked);
+        document
+          .getElementById("block-send")
+          .classList.toggle("hidden", !hasFlags);
+        document
+          .getElementById("block-refuse")
+          .classList.toggle("hidden", hasFlags);
       }
 
       async function api(url, method = "GET", data = null) {
@@ -725,6 +978,7 @@
         };
         if (data) opts.body = JSON.stringify(data);
         const res = await fetch(url, opts);
+        if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
         return method === "GET" ? await res.json() : res;
       }
 
@@ -732,22 +986,30 @@
         const cfg = await api("/api/config");
         document.getElementById("cfg-clinic-name").value =
           cfg.clinic_name || "";
+        document.getElementById("cfg-clinic-address").value =
+          cfg.clinic_address || "";
+        document.getElementById("cfg-clinic-phone").value =
+          cfg.clinic_phone || "";
+        document.getElementById("cfg-clinic-email").value =
+          cfg.clinic_email || "";
         document.getElementById("cfg-lab-name").value = cfg.lab_name || "";
         document.getElementById("cfg-lab-address").value =
           cfg.lab_address || "";
         document.getElementById("cfg-lab-phone").value = cfg.lab_phone || "";
         document.getElementById("cfg-lab-email").value = cfg.lab_email || "";
       }
-
       async function saveSettings() {
         await api("/api/config", "POST", {
           clinic_name: document.getElementById("cfg-clinic-name").value,
+          clinic_address: document.getElementById("cfg-clinic-address").value,
+          clinic_phone: document.getElementById("cfg-clinic-phone").value,
+          clinic_email: document.getElementById("cfg-clinic-email").value,
           lab_name: document.getElementById("cfg-lab-name").value,
           lab_address: document.getElementById("cfg-lab-address").value,
           lab_phone: document.getElementById("cfg-lab-phone").value,
           lab_email: document.getElementById("cfg-lab-email").value,
         });
-        alert("Настройки успешно сохранены!");
+        alert("✅ Настройки сохранены!");
       }
 
       async function loadVets() {
@@ -756,31 +1018,31 @@
         select.innerHTML = '<option value="">Выберите...</option>';
         const tbody = document.querySelector("#table-vets tbody");
         tbody.innerHTML = "";
-        vets.forEach((v) => {
+        (Array.isArray(vets) ? vets : []).forEach((v) => {
           select.innerHTML += `<option value="${v.id}">${v.full_name} (${v.position})</option>`;
-          tbody.innerHTML += `<tr><td>${v.full_name}</td><td>${v.position}</td><td><button class="btn btn-sm btn-secondary" onclick="editVet('${v.id}', '${v.full_name}', '${v.position}')">Изменить</button></td></tr>`;
+          tbody.innerHTML += `<tr><td>${v.full_name}</td><td>${v.position}</td><td><button class="btn btn-sm btn-secondary" onclick="editVet('${v.id}')">Изменить</button></td></tr>`;
         });
       }
       async function addVet() {
+        const name = document.getElementById("new-vet-name").value;
+        const pos = document.getElementById("new-vet-pos").value;
+        if (!name) return alert("Введите ФИО");
         await api("/api/vets", "POST", {
-          full_name: document.getElementById("new-vet-name").value,
-          position: document.getElementById("new-vet-pos").value,
+          full_name: name,
+          position: pos || "Ветеринарный врач",
         });
         document.getElementById("new-vet-name").value = "";
         document.getElementById("new-vet-pos").value = "";
         loadVets();
       }
-      async function editVet(id, name, pos) {
-        const newName = prompt("ФИО:", name);
-        const newPos = prompt("Должность:", pos);
-        if (newName && newPos) {
-          await api("/api/vets", "PUT", {
-            id,
-            full_name: newName,
-            position: newPos,
-          });
-          loadVets();
-        }
+      async function editVet(id) {
+        const vet = (await api("/api/vets")).find((v) => v.id === id);
+        const name = prompt("ФИО:", vet.full_name);
+        if (!name) return;
+        const pos = prompt("Должность:", vet.position);
+        if (!pos) return;
+        await api("/api/vets", "PUT", { id, full_name: name, position: pos });
+        loadVets();
       }
 
       async function loadOwners() {
@@ -791,7 +1053,7 @@
         animalOwnerSelect.innerHTML = "";
         const tbody = document.querySelector("#table-owners tbody");
         tbody.innerHTML = "";
-        owners.forEach((o) => {
+        (Array.isArray(owners) ? owners : []).forEach((o) => {
           select.innerHTML += `<option value="${o.id}">${o.full_name}</option>`;
           animalOwnerSelect.innerHTML += `<option value="${o.id}">${o.full_name}</option>`;
           tbody.innerHTML += `<tr><td>${o.full_name}</td><td>${o.doc_info}</td><td>${o.address}</td><td>${o.phone}</td><td><button class="btn btn-sm btn-secondary" onclick="editOwner('${o.id}')">Изменить</button></td></tr>`;
@@ -827,7 +1089,7 @@
         select.innerHTML = '<option value="">Выберите...</option>';
         const tbody = document.querySelector("#table-animals tbody");
         tbody.innerHTML = "";
-        animals.forEach((a) => {
+        (Array.isArray(animals) ? animals : []).forEach((a) => {
           select.innerHTML += `<option value="${a.id}">${a.species} "${a.nickname || a.inventory_no}" (${a.owner_name})</option>`;
           tbody.innerHTML += `<tr><td>${a.owner_name}</td><td>${a.species}</td><td>${a.nickname || a.inventory_no}</td><td>${a.age}, ${a.sex}</td><td><button class="btn btn-sm btn-secondary" onclick="editAnimal('${a.id}')">Изменить</button></td></tr>`;
         });
@@ -860,12 +1122,43 @@
 
       async function submitDoc(e) {
         e.preventDefault();
-        const hasFlags =
-          document.getElementById("flag-wild").checked ||
-          document.getElementById("flag-bite").checked ||
-          document.getElementById("flag-saliva").checked ||
-          document.getElementById("flag-signs").checked ||
-          document.getElementById("flag-corpse").checked;
+        if (!document.getElementById("d-vet").value)
+          return alert("⚠️ Выберите врача");
+        if (!document.getElementById("d-owner").value)
+          return alert("⚠️ Выберите владельца");
+        if (!document.getElementById("d-animal").value)
+          return alert("⚠️ Выберите животное");
+
+        const hasFlags = [
+          "flag-wild",
+          "flag-bite",
+          "flag-saliva",
+          "flag-signs",
+          "flag-corpse",
+        ].some((id) => document.getElementById(id).checked);
+
+        if (hasFlags) {
+          if (!document.getElementById("d-material-name").value.trim())
+            return alert("⚠️ Укажите наименование материала");
+          if (!document.getElementById("d-material-qty").value.trim())
+            return alert("⚠️ Укажите количество материала");
+        } else {
+          if (!document.getElementById("d-refuse-reason").value.trim())
+            return alert("⚠️ Укажите диагноз / обстоятельства падежа");
+        }
+
+        const survey = {
+          housing: document.getElementById("s-housing").value,
+          contacts: document.getElementById("s-contacts").value,
+          signs: document.getElementById("s-signs").value,
+          flags: {
+            wild: document.getElementById("flag-wild").checked,
+            bite: document.getElementById("flag-bite").checked,
+            saliva: document.getElementById("flag-saliva").checked,
+            signs: document.getElementById("flag-signs").checked,
+            corpse: document.getElementById("flag-corpse").checked,
+          },
+        };
 
         const payload = {
           vet_id: document.getElementById("d-vet").value,
@@ -875,138 +1168,422 @@
           decision_reason: hasFlags
             ? "Наличие оснований для подозрения на бешенство (п. 10 Правил)"
             : document.getElementById("d-refuse-reason").value,
-          disease_to_exclude: document.getElementById("d-disease").value,
-          material_desc: document.getElementById("d-material").value,
-          illness_date: document.getElementById("d-illness-date").value,
-          death_date: document.getElementById("d-death-date").value,
-          clinical_picture: document.getElementById("d-clinical").value,
-          patho_data: document.getElementById("d-patho").value,
-          sampling_place: document.getElementById("d-sample-place").value,
-          sampling_datetime: document.getElementById("d-sample-time").value,
-          act_no: document.getElementById("d-act-no").value,
-          send_date: new Date().toISOString().split("T")[0],
-          packaging_type: document.getElementById("d-pack-type").value,
+          survey: survey,
+          disease_to_exclude: document.getElementById("d-disease")?.value || "",
+          material_name:
+            document.getElementById("d-material-name")?.value || "",
+          material_quantity:
+            document.getElementById("d-material-qty")?.value || "",
+          illness_date: document.getElementById("d-illness-date")?.value || "",
+          death_date: document.getElementById("d-death-date")?.value || "",
+          clinical_picture: document.getElementById("d-clinical")?.value || "",
+          patho_data: document.getElementById("d-patho")?.value || "",
+          presumptive_diagnosis:
+            document.getElementById("d-presumptive-diag")?.value || "",
+          sampling_place:
+            document.getElementById("d-sample-place")?.value || "",
+          sampling_datetime:
+            document.getElementById("d-sample-time")?.value || "",
+          act_no: document.getElementById("d-act-no")?.value || "",
+          send_date:
+            document.getElementById("d-send-date")?.value ||
+            new Date().toISOString().split("T")[0],
+          packaging_type: document.getElementById("d-pack-type")?.value || "",
+          accreditation_scope:
+            document.getElementById("d-acc-scope")?.value || "",
+          method_choice:
+            document.getElementById("d-method-choice")?.value || "",
+          uncertainty_info:
+            document.getElementById("d-uncertainty")?.value || "",
+          result_delivery:
+            document.getElementById("d-result-delivery")?.value || "",
+          result_email: document.getElementById("d-result-email")?.value || "",
+          result_copies:
+            document.getElementById("d-result-copies")?.value || "",
+          owner_rep_position:
+            document.getElementById("d-owner-rep-pos")?.value || "",
+          sample_receiver_position:
+            document.getElementById("d-sample-receiver-pos")?.value || "",
         };
 
-        const res = await api("/api/protocols", "POST", payload);
-        const data = await res.json();
-        showPrintView(data.id);
+        try {
+          const res = await api("/api/protocols", "POST", payload);
+          const data = await res.json();
+          showPrintView(data.id);
+        } catch (err) {
+          alert("Ошибка: " + err.message);
+        }
+      }
+
+      function formatDateRu(dateStr) {
+        if (!dateStr) return "«___» ________ 20__ г.";
+        const d = new Date(dateStr);
+        const months = [
+          "января",
+          "февраля",
+          "марта",
+          "апреля",
+          "мая",
+          "июня",
+          "июля",
+          "августа",
+          "сентября",
+          "октября",
+          "ноября",
+          "декабря",
+        ];
+        return `«${d.getDate()}» ${months[d.getMonth()]} ${d.getFullYear()} г.`;
+      }
+
+      function flagText(survey) {
+        const items = [];
+        if (!survey || !survey.flags) return "Не выявлено";
+        if (survey.flags.wild)
+          items.push("контакты с дикими/безнадзорными животными");
+        if (survey.flags.bite) items.push("факт укуса людей");
+        if (survey.flags.saliva) items.push("ослюнение людей");
+        if (survey.flags.signs) items.push("клинические признаки бешенства");
+        if (survey.flags.corpse) items.push("следы укусов/ослюнения на трупе");
+        return items.length ? items.join("; ") : "Не выявлено";
       }
 
       async function showPrintView(id) {
+        const printView = document.getElementById("print-view");
         document
           .querySelectorAll(".content > div")
           .forEach((d) => d.classList.add("hidden"));
         document.querySelector(".nav").classList.add("hidden");
-        document.getElementById("print-view").classList.remove("hidden");
+        printView.classList.remove("hidden");
+        printView.style.display = "block";
 
-        const data = await api("/api/protocol/" + id);
-        const container = document.getElementById("print-document");
+        // 1. Сохраняем ID протокола для кнопки скачивания
+        currentProtocolId = id;
 
-        if (data.decision_type === "refuse") {
-          // ШАБЛОН ОТКАЗА (СББЖ в шапке)
-          container.innerHTML = `
+        try {
+          const data = await api("/api/protocol/" + id);
+          const container = document.getElementById("print-document");
+          const survey = data.survey || {};
+          const today = formatDateRu(new Date().toISOString().split("T")[0]);
+
+          // 2. Показываем кнопку "Скачать Word" ТОЛЬКО для Ф-20 (decision_type === "send")
+          document.getElementById("btn-download-word").style.display =
+            data.decision_type === "send" ? "inline-block" : "none";
+
+          if (data.decision_type === "refuse") {
+            // ===== ОТКАЗ =====
+            container.innerHTML = `
+              <div class="print-page">
                 <div class="refusal-doc">
-                    <div class="refusal-header-clinic">${data.clinic_name}</div>
-                    <div class="refusal-header">
-                        Исх. № ______ от «___» ________ 20__ г.<br><br>
-                        В ${data.lab_name}<br>
-                        ${data.lab_address}
-                    </div>
-                    <div class="refusal-title">ОБОСНОВАННЫЙ ОТКАЗ<br>в направлении патологического материала на исследование<br>на бешенство</div>
-                    
-                    <div class="refusal-section">
-                        Касательно трупа животного: <b>${data.species}</b> (возраст: ${data.age}, пол: ${data.sex}), кличка/инв.№: ${data.nickname || data.inv_no}.<br>
-                        Владелец: <b>${data.owner_name}</b> (${data.owner_doc}, ${data.owner_addr}, тел: ${data.owner_phone}).<br>
-                        Осмотр провел: <b>${data.vet_name}</b>, ${data.vet_pos}.
-                    </div>
-
-                    <div class="refusal-section">
-                        <b>1. Фактические обстоятельства:</b><br>
-                        ${data.decision_reason}
-                    </div>
-
-                    <div class="refusal-section">
-                        <b>2. Правовое обоснование:</b><br>
-                        В соответствии с п. 10 «Ветеринарных правил осуществления профилактических, диагностических, ограничительных и иных мероприятий, установления и отмены карантина и иных ограничений, направленных на предотвращение распространения и ликвидацию очагов бешенства» (утв. приказом Минсельхоза России от 25.11.2020 № 705), основаниями для подозрения на бешенство являются наличие клинических признаков, контакт с больными животными или обнаружение трупа со следами укусов/ослюнения. 
-                        В данном случае указанные основания <b>отсутствуют</b>.
-                    </div>
-
-                    <div class="refusal-section">
-                        <b>3. Разъяснения владельцу:</b>
-                        <ul>
-                            <li>Труп животного подлежит утилизации в порядке, установленном Ветеринарными правилами сбора, хранения, перемещения, утилизации и уничтожения биологических отходов.</li>
-                            <li>При наличии факта укуса или ослюнения животным, владельцу настоятельно рекомендовано немедленно обратиться в медицинскую организацию (травмпункт) для решения вопроса о проведении курса антирабической вакцинации.</li>
-                        </ul>
-                    </div>
-
-                    <div class="refusal-signatures">
-                        <div>Ветеринарный врач:<br><br>___________ / ${data.vet_name} /</div>
-                        <div>С документом ознакомлен(а):<br><br>___________ / ${data.owner_name} /<br>«___» ________ 20__ г.</div>
-                    </div>
-                </div>
-            `;
-        } else {
-          // ШАБЛОН Ф-20 (СББЖ как Заказчик/Отправитель)
-          container.innerHTML = `
-                <div class="f20-header">
+                  <div class="refusal-header-clinic">${data.clinic_name}</div>
+                  <div class="refusal-header-clinic-contacts">
+                    ${data.clinic_address}<br>
+                    ${data.clinic_phone}${data.clinic_email ? ", " + data.clinic_email : ""}
+                  </div>
+                  <div style="text-align:right; font-size:11pt; margin-bottom:30px;">
+                    Исх. № ______<br>от ${today}
+                  </div>
+                  <div class="refusal-title">ОБОСНОВАННЫЙ ОТКАЗ<br>в выдаче направления на исследование<br>патологического материала на бешенство</div>
+                  <div class="refusal-section">
+                    Уважаемая(ый) <b>${data.owner_name}</b>!<br><br>
+                    Ваше обращение о выдаче направления на исследование трупа принадлежащего Вам животного 
+                    <b>${data.species}</b> (возраст: ${data.age}, пол: ${data.sex}), кличка/инв.№: <b>${data.nickname || data.inv_no}</b> 
+                    в аккредитованную ветеринарную лабораторию на бешенство рассмотрено.
+                  </div>
+                  <div class="refusal-section">
+                    <b>1. Фактические обстоятельства:</b><br>
+                    ${data.decision_reason}<br>
+                    Эпидемиологические факторы, требующие исследования: <b>${flagText(survey)}</b>.
+                  </div>
+                  <div class="refusal-section">
+                    <b>2. Правовое обоснование:</b><br>
+                    В соответствии с п. 10 «Ветеринарных правил осуществления профилактических, диагностических, ограничительных и иных мероприятий, установления и отмены карантина и иных ограничений, направленных на предотвращение распространения и ликвидацию очагов бешенства», утвержденных приказом Минсельхоза России от 25.11.2020 № 705, исчерпывающий перечень оснований для подозрения на бешенство включает: наличие клинических признаков, контакт с больными животными, обнаружение трупа со следами укусов/ослюнения.<br>
+                    В данном случае указанные основания <b>отсутствуют</b>.
+                  </div>
+                  <div class="refusal-section">
+                    <b>3. Разъяснения:</b>
+                    <ul>
+                      <li>Труп животного подлежит утилизации в порядке, установленном Ветеринарными правилами сбора, хранения, перемещения, утилизации и уничтожения биологических отходов.</li>
+                      <li>При наличии факта укуса или ослюнения животным Вам рекомендовано немедленно обратиться в медицинскую организацию (травмпункт) для решения вопроса о проведении курса антирабической вакцинации.</li>
+                      <li>Вы вправе обратиться в стороннюю аккредитованную лабораторию для проведения патоморфологического исследования в частном порядке.</li>
+                    </ul>
+                  </div>
+                  <div class="refusal-signatures">
                     <div>
-                        <b>Заказчик (Отправитель):</b><br>
-                        ${data.clinic_name}<br>
-                        Ветеринарный врач: ${data.vet_name}, ${data.vet_pos}<br>
-                        Владелец животного: ${data.owner_name}<br>
-                        ${data.owner_doc}<br>
-                        ${data.owner_addr}<br>
-                        Тел: ${data.owner_phone}
+                      ${data.vet_pos}:<br><br>
+                      _________________ / ${data.vet_name} /
                     </div>
-                    <div style="text-align: right;">
-                        ${data.lab_name}<br>
-                        ${data.lab_address}<br>
-                        ${data.lab_phone}<br>
-                        ${data.lab_email}
+                    <div>
+                      С отказом ознакомлен(а):<br><br>
+                      _________________ / ${data.owner_name} /<br>
+                      ${today}
                     </div>
+                  </div>
                 </div>
-                
-                <div class="f20-title">СОПРОВОДИТЕЛЬНЫЙ ДОКУМЕНТ-ЗАЯВКА<br>К ПАТОЛОГИЧЕСКОМУ (БИОЛОГИЧЕСКОМУ) МАТЕРИАЛУ (Ф-20)</div>
-                
-                <table class="f20-table">
-                    <tr><td class="f20-label">Регистрационный номер заявки</td><td></td><td class="f20-label">Шифр образца</td><td></td><td class="f20-label">Дата поступления</td><td></td><td class="f20-label">Время поступления</td><td></td></tr>
-                    <tr><td class="f20-label">Направляется для исключения</td><td colspan="7">${data.disease}</td></tr>
-                    <tr><td class="f20-label">Патологический (биологический) материал</td><td colspan="7">${data.material}</td></tr>
-                    <tr><td class="f20-label">От (вид, возраст, пол)</td><td colspan="7">${data.species}, ${data.age}, ${data.sex}. Кличка/Инв.№: ${data.nickname || data.inv_no}</td></tr>
-                    <tr><td class="f20-label">Принадлежащего</td><td colspan="7">${data.owner_name}, ${data.owner_addr}</td></tr>
-                    <tr><td class="f20-label">Дата заболевания / падежа</td><td colspan="7">Заболел: ${data.illness_date || "не указана"} | Пал: ${data.death_date || "не указан"}</td></tr>
-                    <tr><td class="f20-label">Клиническая картина</td><td colspan="7">${data.clinical || "Не описана"}</td></tr>
-                    <tr><td class="f20-label">Патологоанатомические данные</td><td colspan="7">${data.patho || "Не проводилось"}</td></tr>
-                    <tr><td class="f20-label">Место, дата и время отбора</td><td colspan="7">${data.sample_place}, ${data.sample_time ? new Date(data.sample_time).toLocaleString("ru-RU") : "не указано"}</td></tr>
-                    <tr><td class="f20-label">№ акта / Вид упаковки</td><td colspan="7">Акт №: ${data.act_no || "б/н"} | Упаковка: ${data.pack_type || "не указана"}</td></tr>
+              </div>
+            `;
+          } else {
+            // ===== Ф-20 ПО УТВЕРЖДЕННОЙ ФОРМЕ =====
+            const sampleTimeStr = data.sample_time
+              ? new Date(data.sample_time).toLocaleString("ru-RU", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })
+              : "";
+            const illnessDateStr = data.illness_date
+              ? formatDateRu(data.illness_date)
+              : "";
+            const deathDateStr = data.death_date
+              ? formatDateRu(data.death_date)
+              : "";
+            const sendDateStr = data.send_date
+              ? formatDateRu(data.send_date)
+              : "";
+
+            const labNameFormatted = (data.lab_name || "")
+              .replace(
+                /(Бюджетное государственное учреждение Ивановской области)/,
+                "$1<br>",
+              )
+              .replace(/(«[^»]+»)/, "$1<br>");
+
+            container.innerHTML = `
+              <div class="print-page f20-page">
+                <table class="f20-header-table" style="width:100%; border-collapse:collapse; font-size:9pt; margin-bottom:0;">
+                  <tr>
+                    <td style="border:1px solid #000; padding:6px; width:50%; vertical-align:top;">
+                      <b>Заказчик:</b><br>
+                      ${data.owner_name}<br>
+                      ${data.owner_doc || "—"}<br>
+                      ${data.clinic_address}<br>
+                      Тел.: ${data.clinic_phone}
+                    </td>
+                    <td style="border:1px solid #000; padding:6px; width:50%; vertical-align:top; font-size:9pt;">
+                      ${labNameFormatted}<br>
+                      ${data.lab_address}<br>
+                      ${data.lab_phone}<br>
+                      mail: ${data.lab_email}
+                    </td>
+                  </tr>
                 </table>
 
-                <div class="f20-signatures">
-                    <div>
-                        Материал отобран, упакован и отправлен:<br><br>
-                        ____________________ / ${data.vet_name} /<br>
-                        <span style="font-size: 9pt;">(${data.vet_pos}, ${data.clinic_name})</span>
-                    </div>
-                    <div>
-                        Представитель заказчика (владелец):<br><br>
-                        ____________________ / ${data.owner_name} /<br>
-                        <span style="font-size: 9pt;">(подпись, дата)</span>
-                    </div>
+                <table class="f20-reg-table" style="width:100%; border-collapse:collapse; font-size:9pt; margin-bottom:8px;">
+                  <tr>
+                    <td style="padding:4px; width:25%; text-align:center;">Регистрационный номер заявки</td>
+                    <td style="padding:4px; width:25%; text-align:center;">Шифр образца</td>
+                    <td style="padding:4px; width:25%; text-align:center;">Дата поступления</td>
+                    <td style="padding:4px; width:25%; text-align:center;">Время поступления</td>
+                  </tr>
+                </table>
+
+                <div class="f20-title" style="text-align:center; font-weight:bold; font-size:11pt; margin:10px 0; text-transform:uppercase;">
+                  СОПРОВОДИТЕЛЬНЫЙ ДОКУМЕНТ-ЗАЯВКА<br>К ПАТОЛОГИЧЕСКОМУ (БИОЛОГИЧЕСКОМУ) МАТЕРИАЛУ
                 </div>
 
-                <div class="f20-disclaimer">
-                    <b>Заказчик уведомлен и дает свое согласие на:</b> обработку персональных данных; сроки проведения испытаний; оплату всех расходов за проведение испытаний; невозврат и списание образцов после проведения испытаний без представителя заказчика.<br>
-                    Лаборатория не несет ответственность за стадию отбора и условия доставки образца(-ов), представленного(-ых) заказчиком для исследований. Лаборатория не дает оценку соответствия продукции, не выдает заключений о выданных результатах исследований. Информация, указанная в данной заявке, будет отражена в протоколе испытаний. За информацию, предоставленную заказчиком, лаборатория ответственности не несет.<br>
-                    В случае получения результата, не соответствующего требованиям НД, будет сформирован срочный отчет по форме 4-ВЕТ-Б, согласно ПРИКАЗУ МИНСЕЛЬХОЗА РФ от 21.02.2022 № 89.<br>
-                    В соответствии со статьей 4.1 Закона РФ «О Ветеринарии» от 14.05.1993 №4979-1 и Постановлением правительства РФ от 07.11.2016 №1140, испытательная лаборатория осуществляет работу с использованием компонента ФГИС «ВЕТИС». Сведения о выданных протоколах испытаний представляются в Федеральную службу по аккредитации (Приказ Минэкономразвития РФ от 24.10.2020 г. № 704).
+                <table class="f20-main-table" style="width:100%; border-collapse:collapse; font-size:9pt;">
+                  <tr>
+                    <td style="padding:4px 6px; width:30%; font-weight:bold;">Направляется для исключения</td>
+                    <td style="padding:4px 6px;">(наименования заболевания)<br><b>${data.disease || ""}</b></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">Патологический (биологический) материал<br><span style="font-weight:normal; font-size:8pt;">(указать наименование материала, количество материала):</span></td>
+                    <td style="padding:4px 6px;"><b>${data.material_name || ""}</b>, количество: <b>${data.material_quantity || ""}</b></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">от</td>
+                    <td style="padding:4px 6px;">(вид и возраст животного)<br><b>${data.species || ""}</b>, возраст: <b>${data.age || ""}</b></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">принадлежащего</td>
+                    <td style="padding:4px 6px;">(наименование организации, хозяйства, предприятия, ФИО владельца животного)<br><b>${data.owner_name || ""}</b></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">(фактический/юридический адрес)</td>
+                    <td style="padding:4px 6px;"><b>${data.owner_addr || ""}</b></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">Дата заболевания животного</td>
+                    <td style="padding:4px 6px;">${illnessDateStr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Дата падежа: ${deathDateStr}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">Клиническая картина</td>
+                    <td style="padding:4px 6px;">${data.clinical || ""}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">Данные патологоанатомического вскрытия</td>
+                    <td style="padding:4px 6px;">${data.patho || ""}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">Предположительный диагноз</td>
+                    <td style="padding:4px 6px;">${data.presumptive_diagnosis || ""}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">Место отбора</td>
+                    <td style="padding:4px 6px;">${data.sample_place || ""}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">Дата, время отбора</td>
+                    <td style="padding:4px 6px;">${sampleTimeStr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; № акта: ${data.act_no || ""}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:4px 6px; font-weight:bold;">Дата отправки материала</td>
+                    <td style="padding:4px 6px;">${sendDateStr} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Вид упаковки: ${data.pack_type || ""}</td>
+                  </tr>
+                </table>
+
+                <div style="margin-top:12px; font-size:9pt;">
+                  <b>Материал отобран, упакован и отправлен:</b><br><br>
+                  <b>${data.vet_pos || ""}</b> &nbsp; ____________ &nbsp; <b>${data.vet_name || ""}</b><br>
+                  <span style="font-size:8pt;">(должность) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(подпись) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(ФИО)</span>
                 </div>
+
+                <div style="margin-top:15px; font-size:9pt; line-height:1.6;">
+                  <div><b>Испытания провести согласно:</b> &nbsp; ☐ Области аккредитации &nbsp;&nbsp; ☐ Вне области аккредитации &nbsp;&nbsp; <i>отметить нужное</i></div>
+                  <div style="margin-top:6px;"><b>Право выбора оптимального метода и методики испытания проб(ы) оставляю за лабораторией:</b> &nbsp; ☐ да &nbsp;&nbsp; ☐ нет</div>
+                  <div style="margin-top:6px;"><b>ПРЕДОСТАВЛЕНИЕ СВЕДЕНИЙ ОБ ОЦЕНЕННОЙ НЕОПРЕДЕЛЕННОСТИ В ПРОТОКОЛЕ ЛАБОРАТОРНЫХ ИСПЫТАНИЙ:</b> &nbsp; ☐ да &nbsp;&nbsp; ☐ нет</div>
+                  <div style="margin-top:6px;"><b>Прошу оригинал/копию (ненужное зачеркнуть) результата исследования:</b></div>
+                  <div style="margin-left:20px;">☐ выдать на руки</div>
+                  <div style="margin-left:20px;">☐ отправить по электронной почте &nbsp; <u>${data.result_email || "(указать адрес электронной почты)"}</u></div>
+                  <div style="margin-top:6px;"><b>Количество необходимых экземпляров результатов исследований:</b> <u>${data.result_copies || "1"}</u></div>
+                </div>
+
+                <div style="margin-top:15px; font-size:7.5pt; line-height:1.25; text-align:justify;">
+                  <b>Заказчик уведомлен и дает свое согласие на:</b><br>
+                  Обработку персональных данных<br>
+                  Сроки проведения испытаний<br>
+                  Оплату всех расходов за проведение испытаний<br>
+                  Не возврат и списание образцов после проведения испытаний без представителя заказчика<br>
+                  Лаборатория не несет ответственность за стадию отбора, условия доставки образца(-ов), представленного(-ых) заказчиком для исследований<br>
+                  Лаборатория не дает оценку соответствия продукции, не выдает заключений о выданных результатах исследований.<br>
+                  Информация, указанная в данной заявке, будет отражена в протоколе испытаний. За информацию, предоставленную заказчиком, лаборатория ответственности не несет.<br>
+                  В случае получения результата, не соответствующего требованиям НД, будет сформирован срочный отчет по форме 4-ВЕТ-Б, согласно ПРИКАЗУ МИНСЕЛЬХОЗА РФ от 21.02.2022 № 89.<br>
+                  В соответствии со статьей 4.1 Закона РФ «О Ветеринарии» от 14.05.1993 №4979-1, Постановлением правительства РФ от 07.11.2016 №1140 «О порядке создания, развития и эксплуатации федеральной государственной информационной системы в области ветеринарии» и порядком предоставления информации в федеральную государственную информационную систему в области ветеринарии и получения информации из нее, утвержденного Приказом Минсельхоза России от 30.06.2017 №318, испытательная лаборатория осуществляет работу с использованием компонента ФГИС «ВЕТИС»;<br>
+                  В соответствии с Приказом Минэкономразвития РФ от 24.10.2020 г. № 704 «Об утверждении положения о составе сведений о результатах деятельности аккредитованных лиц, об изменениях состава их работников и о компетенции этих работников, об изменениях технической оснащенности, представляемых аккредитованными лицами в Федеральную службу по аккредитации, порядке и сроках представления аккредитованными лицами таких сведений в Федеральную службу по аккредитации» сведения о выданных протоколах испытаний, в том числе о Заказчике, представляются в Федеральную службу по аккредитации;
+                </div>
+
+                <table style="width:100%; border-collapse:collapse; font-size:9pt; margin-top:15px;">
+                  <tr>
+                    <td style="padding:6px; width:40%;"><b>Представитель заказчика ознакомлен и согласен</b></td>
+                    <td style="padding:6px; width:20%;"><div style="font-size:8pt; color:#666;">(должность)</div><div>${data.owner_rep_position || ""}</div></td>
+                    <td style="padding:6px; width:20%;"><div style="font-size:8pt; color:#666;">(подпись)</div></td>
+                    <td style="padding:6px; width:20%;"><div style="font-size:8pt; color:#666;">(расшифровка подписи)</div><div><b>${data.owner_name || ""}</b></div></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px;"><b>Подпись лица, сдавшего пробы, дата</b></td>
+                    <td style="padding:6px;"><div style="font-size:8pt; color:#666;">(подпись)</div></td>
+                    <td style="padding:6px;"><div style="font-size:8pt; color:#666;">(расшифровка подписи)</div><div><b>${data.vet_name || ""}</b></div></td>
+                    <td style="padding:6px;"><div style="font-size:8pt; color:#666;">(дата)</div><div>${sendDateStr}</div></td>
+                  </tr>
+                  <tr>
+                    <td style="padding:6px;"><b>Сотрудник, принявший пробы, дата</b></td>
+                    <td style="padding:6px;"><div style="font-size:8pt; color:#666;">(подпись)</div></td>
+                    <td style="padding:6px;"><div style="font-size:8pt; color:#666;">(расшифровка подписи)</div></td>
+                    <td style="padding:6px;"><div style="font-size:8pt; color:#666;">(дата)</div></td>
+                  </tr>
+                </table>
+
+                <div style="margin-top:15px; border:1px solid #000; padding:8px; font-size:9pt;">
+                  <b>Отметка лаборатории:</b><br>
+                  Доставлено проб (кол-во): ____________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Забраковано (кол-во): ____________<br>
+                  Причина браковки проб: ____________________________________________________________________________
+                </div>
+
+                <div style="margin-top:12px; font-size:9pt;">
+                  <b>Анализ заявки произведен и согласован:</b><br>
+                  <div style="margin-top:6px;">Представитель заказчика: &nbsp; _____________________________ &nbsp; (ФИО) &nbsp; _____________________ &nbsp; (подпись)</div>
+                  <div style="margin-top:6px;">Представитель ${data.lab_name || "лаборатории"}: &nbsp; ________________ &nbsp; (должность) &nbsp; ____________ &nbsp; (подпись) &nbsp; _______________________ &nbsp; (расшифровка подписи)</div>
+                </div>
+
+                <div style="margin-top:15px; font-size:7.5pt; font-style:italic; color:#333;">Примечание:</div>
+              </div>
+
+              <div class="print-page">
+                <div class="f20-inventory-title">Опись проб к сопроводительному документу-заявке:</div>
+                <div style="font-size:9pt; margin-bottom:10px;">
+                  (регистрационный номер заявки) ____________ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (дата поступления) ____________
+                </div>
+                <table class="f20-inventory-table">
+                  <thead>
+                    <tr>
+                      <th style="width:7%;">№ п/п</th>
+                      <th style="width:25%;">Инвентарный номер/кличка</th>
+                      <th style="width:18%;">Возраст, пол</th>
+                      <th style="width:18%;">Шифр пробы</th>
+                      <th style="width:32%;">Результат исследования</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>${data.nickname || data.inv_no || ""}</td>
+                      <td>${data.age}, ${data.sex}</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr><td>2</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>3</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>4</td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>5</td><td></td><td></td><td></td><td></td></tr>
+                  </tbody>
+                </table>
+                <div class="f20-footer">
+                  <div>
+                    <b>Заказчик (владелец):</b><br><br>
+                    ____________ &nbsp; <b>${data.owner_name}</b><br>
+                    <span style="font-size:8pt;">(подпись) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(расшифровка подписи)</span>
+                  </div>
+                  <div style="text-align:right;">стр. 2 из 2</div>
+                </div>
+              </div>
             `;
+          }
+
+          // ===== ПРОТОКОЛ ОПРОСА =====
+          const surveyPage = `
+            <div class="print-page">
+              <div class="survey-doc">
+                <div class="survey-header">ПРОТОКОЛ<br>эпидемиологического опроса владельца животного</div>
+                <div class="survey-meta">
+                  Дата составления: ${today}<br>
+                  Место составления: ${data.clinic_name}, ${data.clinic_address}
+                </div>
+                <table class="survey-table">
+                  <tr><td class="survey-label">Опрос проведен ветеринарным врачом</td><td>${data.vet_name}, ${data.vet_pos}</td></tr>
+                  <tr><td class="survey-label">Владелец (ФИО, документ, адрес, телефон)</td><td>${data.owner_name}<br>${data.owner_doc || "—"}<br>${data.owner_addr}<br>Тел.: ${data.owner_phone}</td></tr>
+                  <tr><td class="survey-label">Вид, кличка/инв.№, возраст, пол животного</td><td>${data.species}, ${data.nickname || data.inv_no || "—"}, возраст: ${data.age}, пол: ${data.sex}</td></tr>
+                  <tr><td class="survey-label">Условия содержания</td><td>${survey.housing || "—"}</td></tr>
+                  <tr><td class="survey-label">Контакты с дикими/безнадзорными животными</td><td>${survey.flags && survey.flags.wild ? "ДА. " + (survey.contacts || "") : "Не выявлено"}</td></tr>
+                  <tr><td class="survey-label">Факты укусов людей за последние 60 дней</td><td>${survey.flags && survey.flags.bite ? "ДА. " + (survey.contacts || "") : "Не выявлено"}</td></tr>
+                  <tr><td class="survey-label">Факты ослюнения людей</td><td>${survey.flags && survey.flags.saliva ? "ДА. " + (survey.contacts || "") : "Не выявлено"}</td></tr>
+                  <tr><td class="survey-label">Клинические признаки бешенства</td><td>${survey.flags && survey.flags.signs ? "ДА. " + (survey.signs || "") : "Не выявлено"}</td></tr>
+                  <tr><td class="survey-label">Следы укусов/ослюнения на трупе</td><td>${survey.flags && survey.flags.corpse ? "ДА. " + (survey.signs || "") : "Не выявлено"}</td></tr>
+                  <tr><td class="survey-label">Обстоятельства падежа / диагноз</td><td>${data.decision_reason || "—"}</td></tr>
+                  <tr><td class="survey-label">Заключение врача</td><td>${data.decision_type === "send" ? "Имеются основания для подозрения на бешенство (п. 10 Правил, Приказ Минсельхоза РФ № 705). Оформлена заявка Ф-20 для направления материала в лабораторию." : "Основания для подозрения на бешенство отсутствуют. Оформлен обоснованный отказ в выдаче направления."}</td></tr>
+                </table>
+                <div class="survey-signatures">
+                  <div>Ветеринарный врач:<br><br>____________ / ${data.vet_name} /</div>
+                  <div>Владелец (с протоколом ознакомлен):<br><br>____________ / ${data.owner_name} /<br>${today}</div>
+                </div>
+              </div>
+            </div>
+          `;
+          container.innerHTML += surveyPage;
+        } catch (err) {
+          alert("Ошибка загрузки документа: " + err.message);
         }
       }
 
+      function downloadWord() {
+        if (!currentProtocolId) return alert("Нет активного протокола");
+        window.location.href = "/api/protocol-docx/" + currentProtocolId;
+      }
+
       function closePrint() {
-        document.getElementById("print-view").classList.add("hidden");
+        const printView = document.getElementById("print-view");
+        printView.classList.add("hidden");
+        printView.style.display = "";
         document.querySelector(".nav").classList.remove("hidden");
         showTab("new-doc");
         document.getElementById("doc-form").reset();
