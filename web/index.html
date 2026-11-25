@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RabiesProtocol</title>
+    <!-- Подключаем внешние стили -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="nav no-print">
+        <button class="active" onclick="showTab('new-doc', event)">
+          📝 Новый документ
+        </button>
+        <button onclick="showTab('history', event)">📋 История</button>
+        <button onclick="showTab('directories', event)">📚 Справочники</button>
+        <button onclick="showTab('settings', event)">⚙️ Настройки</button>
+      </div>
+
+      <div class="content no-print">
+        <div id="tab-new-doc">
+          <h2>Эпидемиологический опрос и формирование документа</h2>
+          <form id="doc-form" onsubmit="submitDoc(event)">
+            <div class="form-grid">
+              <div>
+                <label>Ветеринарный врач *</label>
+                <select id="d-vet" required></select>
+              </div>
+              <div>
+                <label>Владелец животного *</label>
+                <select id="d-owner" required></select>
+              </div>
+              <div class="form-full">
+                <label>Животное *</label>
+                <select id="d-animal" required></select>
+              </div>
+            </div>
+
+            <div class="red-flag-box">
+              <div style="margin-bottom: 10px; font-weight: bold">
+                Эпидемиологический анамнез (отметьте применимое):
+              </div>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-wild" style="width: auto" />
+                Контакты с дикими или безнадзорными животными
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-bite" style="width: auto" />
+                Факт укуса людей за последние 60 дней
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-saliva" style="width: auto" />
+                Ослюнение людей (попадание слюны на ранки/слизистые)
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-signs" style="width: auto" />
+                Клинические признаки: агрессия, слюнотечение, паралич челюсти,
+                водобоязнь
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input type="checkbox" id="flag-corpse" style="width: auto" />
+                Следы укусов или ослюнения на трупе
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  cursor: pointer;
+                  border-top: 1px dashed #fc8181;
+                  padding-top: 10px;
+                  margin-top: 10px;
+                "
+              >
+                <input
+                  type="checkbox"
+                  id="flag-wild-carcass"
+                  style="width: auto"
+                />
+                <b>Труп принадлежит дикому животному</b>
+              </label>
+            </div>
+
+            <!-- Уточняющий блок для укусов/ослюнения -->
+            <div
+              id="block-indoor-check"
+              class="hidden"
+              style="
+                background: #fffaf0;
+                border: 1px solid #f6ad55;
+                color: #c05621;
+                padding: 15px;
+                border-radius: 6px;
+                margin: 15px 0;
+              "
+            >
+              <div style="font-weight: bold; margin-bottom: 10px">
+                ⚠️ Выявлен факт укуса или ослюнения. Уточните условия
+                содержания:
+              </div>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input
+                  type="radio"
+                  name="indoor-status"
+                  id="indoor-yes"
+                  value="yes"
+                  style="width: auto"
+                />
+                Подтверждаю: строгое домашнее содержание, контакт с другими
+                восприимчивыми животными полностью исключен.
+              </label>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  cursor: pointer;
+                "
+              >
+                <input
+                  type="radio"
+                  name="indoor-status"
+                  id="indoor-no"
+                  value="no"
+                  style="width: auto"
+                />
+                Был контакт с другими животными / условия содержания неизвестны
+                / свободный выгул.
+              </label>
+            </div>
+
+            <div class="section-divider"></div>
+            <h3>Детали опроса (для протокола)</h3>
+            <div class="form-grid">
+              <div class="form-full">
+                <label>Условия содержания животного</label>
+                <textarea
+                  id="s-housing"
+                  placeholder="Например: исключительно в квартире, без выгула, без контакта с другими животными"
+                ></textarea>
+              </div>
+              <div class="form-full">
+                <label
+                  >Подробности контактов / укусов / ослюнений (если были)</label
+                >
+                <textarea
+                  id="s-contacts"
+                  placeholder="Дата, обстоятельства, кто пострадал, характер повреждений"
+                ></textarea>
+              </div>
+              <div class="form-full">
+                <label
+                  >Подробности клинических признаков / следов на трупе (если
+                  были)</label
+                >
+                <textarea
+                  id="s-signs"
+                  placeholder="Когда появились, характер проявлений"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Блок для ОТПРАВКИ (Ф-20) -->
+            <div id="block-send" class="hidden">
+              <div
+                class="red-flag-box"
+                style="
+                  background: #fff5f5;
+                  border-color: #c53030;
+                  color: #c53030;
+                "
+              >
+                ⚠️ ОБНАРУЖЕНЫ ОСНОВАНИЯ: будет оформлена заявка Ф-20 с описью
+                проб.
+              </div>
+
+              <h3>Данные для заявки Ф-20</h3>
+              <div class="form-grid">
+                <div class="form-full">
+                  <label>Направляется для исключения (заболевания)</label>
+                  <input type="text" id="d-disease" value="Бешенство" />
+                </div>
+                <div>
+                  <label>Наименование патологического материала *</label>
+                  <input
+                    type="text"
+                    id="d-material-name"
+                    placeholder="Голова кошки целиком"
+                  />
+                </div>
+                <div>
+                  <label>Количество материала *</label>
+                  <input type="text" id="d-material-qty" placeholder="1 шт." />
+                </div>
+                <div>
+                  <label>Дата заболевания</label
+                  ><input type="date" id="d-illness-date" />
+                </div>
+                <div>
+                  <label>Дата падежа / эвтаназии</label
+                  ><input type="date" id="d-death-date" />
+                </div>
+                <div class="form-full">
+                  <label>Клиническая картина</label
+                  ><textarea id="d-clinical"></textarea>
+                </div>
+                <div class="form-full">
+                  <label>Данные патологоанатомического вскрытия</label
+                  ><textarea id="d-patho"></textarea>
+                </div>
+                <div class="form-full">
+                  <label>Предположительный диагноз</label
+                  ><input
+                    type="text"
+                    id="d-presumptive-diag"
+                    placeholder="Бешенство?"
+                  />
+                </div>
+                <div class="form-full">
+                  <label>Место отбора материала</label
+                  ><input type="text" id="d-sample-place" />
+                </div>
+                <div>
+                  <label>Дата и время отбора</label
+                  ><input type="datetime-local" id="d-sample-time" />
+                </div>
+                <div>
+                  <label>№ акта отбора</label
+                  ><input type="text" id="d-act-no" />
+                </div>
+                <div>
+                  <label>Дата отправки материала</label
+                  ><input type="date" id="d-send-date" />
+                </div>
+                <div>
+                  <label>Вид упаковки</label
+                  ><input
+                    type="text"
+                    id="d-pack-type"
+                    placeholder="Термос со льдом"
+                  />
+                </div>
+              </div>
+
+              <h3 style="margin-top: 20px">Параметры исследования</h3>
+              <div class="form-grid">
+                <div>
+                  <label>Испытания провести согласно:</label>
+                  <select id="d-acc-scope">
+                    <option value="Области аккредитации">
+                      Области аккредитации
+                    </option>
+                    <option value="Вне области аккредитации">
+                      Вне области аккредитации
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label>Право выбора метода исследования:</label>
+                  <select id="d-method-choice">
+                    <option value="Оставляю за лабораторией">
+                      Оставляю за лабораторией
+                    </option>
+                    <option value="Не оставляю за лабораторией">
+                      Не оставляю за лабораторией
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label>Сведения о неопределенности:</label>
+                  <select id="d-uncertainty">
+                    <option value="да">да</option>
+                    <option value="нет">нет</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Результат исследования:</label>
+                  <select id="d-result-delivery">
+                    <option value="выдать на руки">выдать на руки</option>
+                    <option value="отправить по электронной почте">
+                      отправить по электронной почте
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label>E-mail для отправки (если применимо)</label>
+                  <input type="text" id="d-result-email" />
+                </div>
+                <div>
+                  <label>Количество экземпляров результата</label>
+                  <input type="text" id="d-result-copies" value="1" />
+                </div>
+                <div>
+                  <label>Должность представителя заказчика</label>
+                  <input
+                    type="text"
+                    id="d-owner-rep-pos"
+                    placeholder="Владелец"
+                  />
+                </div>
+                <div>
+                  <label>Должность лица, сдавшего пробы</label>
+                  <input
+                    type="text"
+                    id="d-sample-receiver-pos"
+                    value="Ветеринарный врач"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-danger"
+                style="width: 100%; margin-top: 20px"
+              >
+                📄 Сформировать заявку Ф-20
+              </button>
+            </div>
+
+            <!-- Блок для ОТКАЗА -->
+            <div id="block-refuse" class="hidden">
+              <div class="green-flag-box">
+                ✅ ОСНОВАНИЯ ОТСУТСТВУЮТ: будет оформлен обоснованный отказ для
+                владельца.
+              </div>
+              <div class="form-grid">
+                <div class="form-full">
+                  <label>Известный диагноз / обстоятельства падежа *</label>
+                  <textarea
+                    id="d-refuse-reason"
+                    placeholder="Например: Хроническая болезнь почек (ХБП), панлейкопения. Лечение в сторонней клинике."
+                  ></textarea>
+                </div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="width: 100%; margin-top: 20px"
+              >
+                📄 Сформировать обоснованный отказ
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Вкладка: История -->
+        <div id="tab-history" class="hidden">
+          <h2>История протоколов</h2>
+          <div style="margin-bottom: 15px">
+            <input
+              type="text"
+              id="search-protocols"
+              placeholder="🔍 Поиск по владельцу, животному..."
+              style="width: 300px"
+            />
+          </div>
+          <table id="protocols-table">
+            <thead>
+              <tr>
+                <th>Дата</th>
+                <th>Владелец</th>
+                <th>Животное</th>
+                <th>Тип документа</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div id="tab-directories" class="hidden">
+          <h2>Справочники</h2>
+          <div style="margin-bottom: 15px">
+            <button class="btn btn-sm btn-secondary" onclick="showDir('vets')">
+              Ветеринарные врачи
+            </button>
+            <button
+              class="btn btn-sm btn-secondary"
+              onclick="showDir('owners')"
+            >
+              Владельцы
+            </button>
+            <button
+              class="btn btn-sm btn-secondary"
+              onclick="showDir('animals')"
+            >
+              Животные
+            </button>
+          </div>
+          <div id="dir-vets">
+            <h3>Ветеринарные врачи</h3>
+            <div class="form-grid">
+              <input
+                type="text"
+                id="new-vet-name"
+                placeholder="ФИО полностью"
+              />
+              <input type="text" id="new-vet-pos" placeholder="Должность" />
+              <button class="btn btn-primary" onclick="addVet()">
+                Добавить
+              </button>
+            </div>
+            <table id="table-vets">
+              <thead>
+                <tr>
+                  <th>ФИО</th>
+                  <th>Должность</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div id="dir-owners" class="hidden">
+            <h3>Владельцы</h3>
+            <div class="form-grid">
+              <input
+                type="text"
+                id="new-owner-name"
+                placeholder="ФИО или Организация"
+              />
+              <input
+                type="text"
+                id="new-owner-doc"
+                placeholder="Документ (паспорт)"
+              />
+              <input
+                type="text"
+                id="new-owner-addr"
+                placeholder="Адрес"
+                class="form-full"
+              />
+              <input type="text" id="new-owner-phone" placeholder="Телефон" />
+              <button class="btn btn-primary" onclick="addOwner()">
+                Добавить
+              </button>
+            </div>
+            <table id="table-owners">
+              <thead>
+                <tr>
+                  <th>ФИО/Орг</th>
+                  <th>Документ</th>
+                  <th>Адрес</th>
+                  <th>Телефон</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div id="dir-animals" class="hidden">
+            <h3>Животные</h3>
+            <div class="form-grid">
+              <select id="new-animal-owner"></select>
+              <input
+                type="text"
+                id="new-animal-species"
+                placeholder="Вид (Кошка)"
+              />
+              <input
+                type="text"
+                id="new-animal-nick"
+                placeholder="Кличка / Инв. номер"
+              />
+              <input type="text" id="new-animal-age" placeholder="Возраст" />
+              <select id="new-animal-sex">
+                <option value="м">М</option>
+                <option value="ж">Ж</option>
+                <option value="неизв.">Неизв.</option>
+              </select>
+              <button class="btn btn-primary" onclick="addAnimal()">
+                Добавить
+              </button>
+            </div>
+            <table id="table-animals">
+              <thead>
+                <tr>
+                  <th>Владелец</th>
+                  <th>Вид</th>
+                  <th>Кличка/Инв.№</th>
+                  <th>Возраст/Пол</th>
+                  <th>Действия</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="tab-settings" class="hidden">
+          <h2>Настройки организации и лаборатории</h2>
+          <h3 style="margin-top: 20px">Данные вашей СББЖ (Ветклиники)</h3>
+          <div class="form-grid">
+            <div class="form-full">
+              <label>Полное наименование СББЖ *</label
+              ><input type="text" id="cfg-clinic-name" />
+            </div>
+            <div class="form-full">
+              <label>Юридический адрес СББЖ</label
+              ><input type="text" id="cfg-clinic-address" />
+            </div>
+            <div>
+              <label>Телефон СББЖ</label
+              ><input type="text" id="cfg-clinic-phone" />
+            </div>
+            <div>
+              <label>E-mail СББЖ</label
+              ><input type="text" id="cfg-clinic-email" />
+            </div>
+          </div>
+          <h3
+            style="
+              margin-top: 30px;
+              border-top: 1px solid #e2e8f0;
+              padding-top: 20px;
+            "
+          >
+            Данные принимающей лаборатории
+          </h3>
+          <div class="form-grid">
+            <div class="form-full">
+              <label>Наименование лаборатории</label
+              ><input type="text" id="cfg-lab-name" />
+            </div>
+            <div class="form-full">
+              <label>Адрес лаборатории</label
+              ><input type="text" id="cfg-lab-address" />
+            </div>
+            <div>
+              <label>Телефон/Факс</label
+              ><input type="text" id="cfg-lab-phone" />
+            </div>
+            <div>
+              <label>E-mail</label><input type="text" id="cfg-lab-email" />
+            </div>
+          </div>
+          <button
+            class="btn btn-primary"
+            onclick="saveSettings()"
+            style="margin-top: 20px"
+          >
+            💾 Сохранить настройки
+          </button>
+        </div>
+      </div>
+
+      <!-- Область печати -->
+      <div id="print-view" class="print-area">
+        <div
+          class="no-print"
+          style="
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 15px;
+            background: #f7fafc;
+          "
+        >
+          <button class="btn btn-secondary" onclick="closePrint()">
+            ← Вернуться
+          </button>
+          <button
+            class="btn btn-success"
+            onclick="window.print()"
+            style="margin-left: 15px"
+          >
+            🖨️ Печать / Сохранить в PDF
+          </button>
+          <button
+            id="btn-download-word"
+            class="btn btn-primary"
+            onclick="downloadWord()"
+            style="margin-left: 15px; display: none"
+          >
+            📄 Скачать Word (Ф-20)
+          </button>
+        </div>
+        <div id="print-document"></div>
+      </div>
+    </div>
+
+    <!-- Подключаем внешний скрипт в конце body -->
+    <script src="app.js"></script>
+  </body>
+</html>
